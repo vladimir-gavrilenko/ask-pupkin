@@ -29,6 +29,10 @@ targetCompatibility = javaVersion
 
 dependencies {
     compile group: 'org.springframework', name: 'spring-webmvc', version: springVersion
+    compile group: 'org.webjars', name: 'bootstrap', version: bootstrapVersion
+    compile group: 'org.webjars', name: 'jquery', version: jqueryVersion
+    compile group: 'org.thymeleaf', name: 'thymeleaf', version: thymeleafVersion
+    compile group: 'org.thymeleaf', name: 'thymeleaf-spring4', version: thymeleafVersion
 
     providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: javaxServletVersion
 
