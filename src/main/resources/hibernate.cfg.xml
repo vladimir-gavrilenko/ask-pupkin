@@ -11,9 +11,7 @@
         <property name="hibernate.hbm2ddl.auto">validate</property>
         <property name="show_sql">false</property>
 
-        <mapping class="gva.model.User" />
-        <mapping class="gva.model.Question" />
-        <mapping class="gva.model.Answer" />
+        <mapping package="gva.model" />
 
     </session-factory>
 </hibernate-configuration>

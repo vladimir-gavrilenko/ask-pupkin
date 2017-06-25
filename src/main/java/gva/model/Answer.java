@@ -3,14 +3,16 @@ package gva.model;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
 
-@SuppressWarnings("UnusedDeclaration")
 @Entity
 @Table(name = "answers")
-public class Answer {
+public class Answer implements Serializable {
+    private static final long serialVersionUID = -1413389493803293698L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -34,7 +36,8 @@ public class Answer {
     @Temporal(TemporalType.TIMESTAMP)
     private Date timeStamp = Calendar.getInstance().getTime();
 
-    public Answer() {}
+    public Answer() {
+    }
 
     public Answer(String content, User author, Question question) {
         this.content = content;

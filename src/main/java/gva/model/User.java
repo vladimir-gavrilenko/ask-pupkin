@@ -9,10 +9,11 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-@SuppressWarnings("UnusedDeclaration")
 @Entity
 @Table(name = "users")
 public class User implements Serializable {
+    private static final long serialVersionUID = 8874492553125255655L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -40,7 +41,8 @@ public class User implements Serializable {
     )
     private Set<Question> likedQuestions = new HashSet<>();
 
-    public User() {}
+    public User() {
+    }
 
     public User(String name, String email, String passwordHash) {
         this.name = name;

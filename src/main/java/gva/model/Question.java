@@ -6,10 +6,11 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.*;
 
-@SuppressWarnings({"UnusedDeclaration", "WeakerAccess"})
 @Entity
 @Table(name = "questions")
 public class Question implements Serializable {
+    private static final long serialVersionUID = 6789816587828570037L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -35,7 +36,8 @@ public class Question implements Serializable {
     @ManyToMany(mappedBy = "likedQuestions")
     private Set<User> likedBy = new HashSet<>();
 
-    public Question() {}
+    public Question() {
+    }
 
     public Question(String header, String content, User author) {
         this.header = header;
