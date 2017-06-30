@@ -29,6 +29,7 @@ targetCompatibility = javaVersion
 
 dependencies {
     compile group: 'org.springframework', name: 'spring-webmvc', version: springVersion
+    compile group: 'org.springframework', name: 'spring-orm', version: springVersion
     compile group: 'org.webjars', name: 'bootstrap', version: bootstrapVersion
     compile group: 'org.webjars', name: 'jquery', version: jqueryVersion
     compile group: 'org.thymeleaf', name: 'thymeleaf', version: thymeleafVersion
@@ -36,7 +37,6 @@ dependencies {
     compile group: 'org.hibernate', name: 'hibernate-core', version: hibernateCoreVersion
     compile group: 'org.hibernate', name: 'hibernate-validator', version: hibernateValidatorVersion
     compile group: 'org.postgresql', name: 'postgresql', version: psqlVersion
-
 
     providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: javaxServletVersion
 

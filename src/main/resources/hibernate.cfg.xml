@@ -10,8 +10,11 @@
         <property name="connection.password">12345678</property>
         <property name="hibernate.hbm2ddl.auto">validate</property>
         <property name="show_sql">false</property>
+        <property name="hibernate.enable_lazy_load_no_trans">true</property>
 
-        <mapping package="gva.model" />
+        <mapping class="gva.model.Answer" />
+        <mapping class="gva.model.Question" />
+        <mapping class="gva.model.User" />
 
     </session-factory>
 </hibernate-configuration>

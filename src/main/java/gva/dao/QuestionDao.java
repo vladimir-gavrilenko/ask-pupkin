@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 public interface QuestionDao extends Dao<Question> {
-    List<Question> getTopUntil(Date until) throws DaoException;
+    List<Question> getTop(int count) throws DaoException;
 
     List<Question> getBetween(Date from, Date to) throws DaoException;
 
