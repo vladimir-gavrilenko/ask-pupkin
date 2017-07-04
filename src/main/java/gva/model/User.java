@@ -9,29 +9,36 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+@SuppressWarnings("WeakerAccess")
 @Entity
-@Table(name = "users")
+@Table(name = User.TABLE_NAME)
 public class User implements Serializable {
     private static final long serialVersionUID = 8874492553125255655L;
+
+    public static final String TABLE_NAME = "users";
+    public static final String EMAIL = "email";
+    public static final String NAME = "name";
+    public static final String PASSWORD_HASH = "password_hash";
+    public static final String AVATAR_PATH = "avatar_path";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @NotBlank
-    @Column(name = "email", nullable = false, unique = true)
+    @Column(name = EMAIL, nullable = false, unique = true)
     private String email;
 
     @NotBlank
-    @Column(name = "name", nullable = false, unique = true)
+    @Column(name = NAME, nullable = false, unique = true)
     private String name;
 
     // md5('name:password')
     @Length(min = 32, max = 32)
-    @Column(name = "password_hash", nullable = false, columnDefinition = "bpchar")
+    @Column(name = PASSWORD_HASH, nullable = false, columnDefinition = "bpchar")
     private String passwordHash;
 
-    @Column(name = "avatar_path", nullable = false)
+    @Column(name = AVATAR_PATH, nullable = false)
     private String avatarPath = "default.jpg";
 
     @ManyToMany(cascade = CascadeType.ALL)

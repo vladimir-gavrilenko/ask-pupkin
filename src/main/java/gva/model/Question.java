@@ -6,30 +6,38 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.*;
 
+@SuppressWarnings("WeakerAccess")
 @Entity
-@Table(name = "questions")
+@Table(name = Question.TABLE_NAME)
 public class Question implements Serializable {
     private static final long serialVersionUID = 6789816587828570037L;
+
+    public static final String TABLE_NAME = "questions";
+    public static final String HEADER = "header";
+    public static final String CONTENT = "content";
+    public static final String USER_ID = "user_id";
+    public static final String RATING = "rating";
+    public static final String TIMESTAMP = "ts";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @NotBlank
-    @Column(name = "header", nullable = false)
+    @Column(name = HEADER, nullable = false)
     private String header;
 
-    @Column(name = "content")
+    @Column(name = CONTENT)
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = USER_ID, nullable = false)
     private User author;
 
-    @Column(name = "rating", nullable = false)
+    @Column(name = RATING, nullable = false)
     private int rating;
 
-    @Column(name = "ts", nullable = false)
+    @Column(name = TIMESTAMP, nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date timeStamp = Calendar.getInstance().getTime();
 

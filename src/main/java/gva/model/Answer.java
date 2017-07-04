@@ -8,31 +8,39 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
 
+@SuppressWarnings("WeakerAccess")
 @Entity
-@Table(name = "answers")
+@Table(name = Answer.TABLE_NAME)
 public class Answer implements Serializable {
     private static final long serialVersionUID = -1413389493803293698L;
+
+    public static final String TABLE_NAME = "answers";
+    public static final String CONTENT = "content";
+    public static final String QUESTION_ID = "question_id";
+    public static final String USER_ID = "user_id";
+    public static final String IS_CORRECT = "is_correct";
+    public static final String TIMESTAMP = "ts";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @NotBlank
-    @Column(name = "content", nullable = false)
+    @Column(name = CONTENT, nullable = false)
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "question_id", nullable = false)
+    @JoinColumn(name = QUESTION_ID, nullable = false)
     private Question question;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = USER_ID, nullable = false)
     private User author;
 
-    @Column(name = "is_correct")
+    @Column(name = IS_CORRECT)
     private Boolean isCorrect = null;
 
-    @Column(name = "ts", nullable = false)
+    @Column(name = TIMESTAMP, nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date timeStamp = Calendar.getInstance().getTime();
 
