@@ -77,6 +77,10 @@ public class User implements Serializable {
         return Objects.hash(id, email, name, passwordHash, avatarPath);
     }
 
+    public int getId() {
+        return id;
+    }
+
     public String getEmail() {
         return email;
     }

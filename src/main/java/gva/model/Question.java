@@ -72,6 +72,10 @@ public class Question implements Serializable {
                 '}';
     }
 
+    public int getId() {
+        return id;
+    }
+
     public String getHeader() {
         return header;
     }
