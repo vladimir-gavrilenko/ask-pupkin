@@ -35,7 +35,7 @@ public class User implements Serializable {
 
     // md5('name:password')
     @Length(min = 32, max = 32)
-    @Column(name = PASSWORD_HASH, nullable = false, columnDefinition = "bpchar")
+    @Column(name = PASSWORD_HASH, nullable = false)//, columnDefinition = "bpchar")
     private String passwordHash;
 
     @Column(name = AVATAR_PATH, nullable = false)
