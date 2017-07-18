@@ -11,8 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.TemporalType;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -46,13 +45,23 @@ public class HibernateAnswerDao extends HibernateDao<Answer> implements AnswerDa
     }
 
     @Override
-    public List<Answer> getBetween(Date from, Date to) throws DaoException {
+    public void deleteAll() throws DaoException {
+        try {
+            Query query = getSession().createQuery("delete from Answer");
+            query.executeUpdate();
+        } catch (HibernateException exception) {
+            throw new DaoException(exception);
+        }
+    }
+
+    @Override
+    public List<Answer> getBetween(LocalDateTime from, LocalDateTime to) throws DaoException {
         try {
             Query<Answer> query = getSession().createQuery(
                     "from Answer where timeStamp between :fromDate and :toDate", Answer.class
             );
-            query.setParameter("fromDate", from, TemporalType.TIMESTAMP)
-                    .setParameter("toDate", to, TemporalType.TIMESTAMP);
+            query.setParameter("fromDate", from)
+                    .setParameter("toDate", to);
             return query.getResultList();
         } catch (HibernateException exception) {
             throw new DaoException(exception);

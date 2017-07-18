@@ -4,7 +4,10 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.*;
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @SuppressWarnings("WeakerAccess")
 @Entity
@@ -38,8 +41,7 @@ public class Question implements Serializable {
     private int rating;
 
     @Column(name = TIMESTAMP, nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date timeStamp = Calendar.getInstance().getTime();
+    private LocalDateTime timeStamp = LocalDateTime.now();
 
     @ManyToMany(mappedBy = "likedQuestions")
     private Set<User> likedBy = new HashSet<>();
@@ -60,13 +62,12 @@ public class Question implements Serializable {
         Question question = (Question) o;
         return id == question.id &&
                 Objects.equals(header, question.header) &&
-                Objects.equals(author, question.author) &&
                 Objects.equals(timeStamp, question.timeStamp);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, header, author, timeStamp);
+        return Objects.hash(id, header, timeStamp);
     }
 
     @Override
@@ -74,10 +75,14 @@ public class Question implements Serializable {
         return "Question{" +
                 "id=" + id +
                 ", header='" + header + '\'' +
-                ", author_name=" + author.getName() +
+                ", author_name=" + (author != null ? author.getName() : null) +
                 ", rating=" + rating +
                 ", timeStamp=" + timeStamp +
                 '}';
+    }
+
+    public void addLikeBy(User user) {
+        likedBy.add(user);
     }
 
     public int getId() {
@@ -116,11 +121,11 @@ public class Question implements Serializable {
         this.rating = rating;
     }
 
-    public Date getTimeStamp() {
+    public LocalDateTime getTimeStamp() {
         return timeStamp;
     }
 
-    public void setTimeStamp(Date timeStamp) {
+    public void setTimeStamp(LocalDateTime timeStamp) {
         this.timeStamp = timeStamp;
     }
 

@@ -41,7 +41,7 @@ public class User implements Serializable {
     @Column(name = AVATAR_PATH, nullable = false)
     private String avatarPath = "default.jpg";
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(name = "likes",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "question_id")

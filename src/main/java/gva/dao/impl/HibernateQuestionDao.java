@@ -4,14 +4,14 @@ import gva.dao.QuestionDao;
 import gva.exception.DaoException;
 import gva.model.Question;
 import gva.model.User;
-import org.hibernate.*;
+import org.hibernate.HibernateException;
+import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.TemporalType;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -44,6 +44,17 @@ public class HibernateQuestionDao extends HibernateDao<Question> implements Ques
         }
     }
 
+
+    @Override
+    public void deleteAll() throws DaoException {
+        try {
+            Query query = getSession().createQuery("delete from Question");
+            query.executeUpdate();
+        } catch (HibernateException exception) {
+            throw new DaoException(exception);
+        }
+    }
+
     @Override
     public List<Question> getTop(int count) throws DaoException {
         try {
@@ -57,13 +68,13 @@ public class HibernateQuestionDao extends HibernateDao<Question> implements Ques
     }
 
     @Override
-    public List<Question> getBetween(Date from, Date to) throws DaoException {
+    public List<Question> getBetween(LocalDateTime from, LocalDateTime to) throws DaoException {
         try {
             Query<Question> query = getSession().createQuery(
                     "from Question where timeStamp between :fromDate and :toDate", Question.class
             );
-            query.setParameter("fromDate", from, TemporalType.TIMESTAMP)
-                    .setParameter("toDate", to, TemporalType.TIMESTAMP);
+            query.setParameter("fromDate", from)
+                    .setParameter("toDate", to);
             return query.getResultList();
         } catch (HibernateException exception) {
             throw new DaoException(exception);

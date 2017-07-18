@@ -4,8 +4,7 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Calendar;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @SuppressWarnings("WeakerAccess")
@@ -41,8 +40,7 @@ public class Answer implements Serializable {
     private Boolean isCorrect = null;
 
     @Column(name = TIMESTAMP, nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date timeStamp = Calendar.getInstance().getTime();
+    private LocalDateTime timeStamp = LocalDateTime.now();
 
     public Answer() {
     }
@@ -59,14 +57,14 @@ public class Answer implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         Answer answer = (Answer) o;
         return id == answer.id &&
-                Objects.equals(question, answer.question) &&
-                Objects.equals(author, answer.author) &&
+                Objects.equals(question.getId(), answer.question.getId()) &&
+                Objects.equals(author.getId(), answer.author.getId()) &&
                 Objects.equals(timeStamp, answer.timeStamp);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, question, author, timeStamp);
+        return Objects.hash(id, question.getId(), author.getId(), timeStamp);
     }
 
     @Override
@@ -111,19 +109,19 @@ public class Answer implements Serializable {
         this.author = author;
     }
 
-    public Boolean getCorrect() {
-        return isCorrect;
+    public Boolean isCorrect() {
+        return isCorrect != null && isCorrect;
     }
 
     public void setCorrect(Boolean correct) {
-        isCorrect = correct;
+        isCorrect = correct == Boolean.TRUE;
     }
 
-    public Date getTimeStamp() {
+    public LocalDateTime getTimeStamp() {
         return timeStamp;
     }
 
-    public void setTimeStamp(Date timeStamp) {
+    public void setTimeStamp(LocalDateTime timeStamp) {
         this.timeStamp = timeStamp;
     }
 }

@@ -27,4 +27,13 @@ public class QuestionServiceImpl implements QuestionService {
             return null;
         }
     }
+
+    @Override
+    public void create(Question question) {
+        try {
+            questionDao.create(question);
+        } catch (DaoException e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -40,6 +40,8 @@ dependencies {
 
     providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: javaxServletVersion
 
-    testCompile group: 'org.springframework', name: 'spring-test', version: springVersion
     testCompile group: 'junit', name: 'junit', version: junitVersion
+    testCompile group: 'org.springframework', name: 'spring-test', version: springVersion
+    testCompile group: 'org.mockito', name: 'mockito-all', version: mockitoVersion
+    testCompile group: 'org.hsqldb', name: 'hsqldb', version: hsqldbVersion
 }

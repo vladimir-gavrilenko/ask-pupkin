@@ -5,8 +5,11 @@ import gva.exception.DaoException;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+import org.springframework.transaction.annotation.Transactional;
 
+// TODO extract getById, getAll, deleteAll to this base class using reflection
+
+@Transactional
 public abstract class HibernateDao<T> implements Dao<T> {
     private SessionFactory sessionFactory;
 
@@ -20,37 +23,29 @@ public abstract class HibernateDao<T> implements Dao<T> {
 
     @Override
     public void create(T object) throws DaoException {
-        Transaction transaction = getSession().beginTransaction();
-        try {
-            getSession().save(object);
-            transaction.commit();
-        } catch (HibernateException exception) {
-            transaction.rollback();
-            throw new DaoException(exception);
-        }
+        execute(Session::save, object);
     }
 
     @Override
     public void update(T object) throws DaoException {
-        Transaction transaction = getSession().beginTransaction();
-        try {
-            getSession().update(object);
-            transaction.commit();
-        } catch (HibernateException exception) {
-            transaction.rollback();
-            throw new DaoException(exception);
-        }
+        execute(Session::update, object);
     }
 
     @Override
     public void delete(T object) throws DaoException {
-        Transaction transaction = getSession().beginTransaction();
+        execute(Session::delete, object);
+    }
+
+    private void execute(Executable<T> executable, T object) throws DaoException {
         try {
-            getSession().delete(object);
-            transaction.commit();
+            executable.execute(getSession(), object);
         } catch (HibernateException exception) {
-            transaction.rollback();
             throw new DaoException(exception);
         }
+    }
+
+    @FunctionalInterface
+    private interface Executable<T> {
+        void execute(Session session, T object);
     }
 }

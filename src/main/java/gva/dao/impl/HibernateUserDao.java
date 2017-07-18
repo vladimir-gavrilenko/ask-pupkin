@@ -42,6 +42,17 @@ public class HibernateUserDao extends HibernateDao<User> implements UserDao {
         }
     }
 
+
+    @Override
+    public void deleteAll() throws DaoException {
+        try {
+            Query query = getSession().createQuery("delete from User");
+            query.executeUpdate();
+        } catch (HibernateException exception) {
+            throw new DaoException(exception);
+        }
+    }
+
     @Override
     public User getByName(String name) throws DaoException {
         return getBy(User.NAME, name);
@@ -55,10 +66,9 @@ public class HibernateUserDao extends HibernateDao<User> implements UserDao {
     private User getBy(String field, String value) throws DaoException {
         try {
             Query<User> query = getSession().createQuery(
-                    "from User where :field = :value", User.class
+                    "from User where " + field + " = :value", User.class
             );
-            query.setParameter("field", field)
-                    .setParameter("value", value);
+            query.setParameter("value", value);
             return query.getSingleResult();
         } catch (HibernateException exception) {
             throw new DaoException(exception);

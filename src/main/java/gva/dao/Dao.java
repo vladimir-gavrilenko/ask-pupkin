@@ -15,4 +15,6 @@ public interface Dao<T> {
     void update(T object) throws DaoException;
 
     void delete(T object) throws DaoException;
+
+    void deleteAll() throws DaoException;
 }
