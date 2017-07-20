@@ -44,17 +44,17 @@ public class ReadDaoTest extends DaoTest {
 
     @Test
     public void testGetAll() throws Exception {
-        List<User> users = userDao.getAll();
+        List<User> users = userDao.findAll();
         assertTrue(users.contains(foo));
         assertTrue(users.contains(bar));
         assertTrue(users.contains(baz));
         assertEquals(3, users.size());
 
-        List<Question> questions = questionDao.getAll();
+        List<Question> questions = questionDao.findAll();
         assertTrue(questions.contains(questionByFoo));
         assertEquals(1, questions.size());
 
-        List<Answer> answers = answerDao.getAll();
+        List<Answer> answers = answerDao.findAll();
         assertTrue(answers.contains(answerByBar));
         assertTrue(answers.contains(answerByBaz));
         assertEquals(2, answers.size());
@@ -62,23 +62,23 @@ public class ReadDaoTest extends DaoTest {
 
     @Test
     public void testUsers() throws Exception {
-        assertEquals(foo, userDao.getByEmail(foo.getEmail()));
-        assertEquals(bar, userDao.getByName(bar.getName()));
+        assertEquals(foo, userDao.findByEmail(foo.getEmail()));
+        assertEquals(bar, userDao.findByName(bar.getName()));
     }
 
     @Test
     public void testAnswers() throws Exception {
         List<Answer> answers;
 
-        answers = answerDao.getFor(answerByBar.getQuestion());
+        answers = answerDao.findFor(answerByBar.getQuestion());
         assertTrue(answers.contains(answerByBar));
 
         LocalDateTime bazAnsweredAt = answerByBaz.getTimeStamp();
-        answers = answerDao.getBetween(bazAnsweredAt.minusDays(1), bazAnsweredAt.plusDays(1));
+        answers = answerDao.findBetween(bazAnsweredAt.minusDays(1), bazAnsweredAt.plusDays(1));
         assertTrue(answers.contains(answerByBaz));
-        answers = answerDao.getBetween(bazAnsweredAt.minusDays(2), bazAnsweredAt.minusDays(1));
+        answers = answerDao.findBetween(bazAnsweredAt.minusDays(2), bazAnsweredAt.minusDays(1));
         assertFalse(answers.contains(answerByBaz));
-        answers = answerDao.getBetween(bazAnsweredAt.plusDays(1), bazAnsweredAt.plusDays(2));
+        answers = answerDao.findBetween(bazAnsweredAt.plusDays(1), bazAnsweredAt.plusDays(2));
         assertFalse(answers.contains(answerByBaz));
     }
 
@@ -86,22 +86,22 @@ public class ReadDaoTest extends DaoTest {
     public void testQuestions() throws Exception {
         List<Question> questions;
 
-        questions = questionDao.getAskedBy(foo);
+        questions = questionDao.findAskedBy(foo);
         assertTrue(questions.contains(questionByFoo));
 
         LocalDateTime fooAskedAt = questionByFoo.getTimeStamp();
-        questions = questionDao.getBetween(fooAskedAt.minusDays(1), fooAskedAt.plusDays(1));
+        questions = questionDao.findBetween(fooAskedAt.minusDays(1), fooAskedAt.plusDays(1));
         assertTrue(questions.contains(questionByFoo));
-        questions = questionDao.getBetween(fooAskedAt.minusDays(2), fooAskedAt.minusDays(1));
+        questions = questionDao.findBetween(fooAskedAt.minusDays(2), fooAskedAt.minusDays(1));
         assertFalse(questions.contains(questionByFoo));
-        questions = questionDao.getBetween(fooAskedAt.plusDays(1), fooAskedAt.plusDays(2));
+        questions = questionDao.findBetween(fooAskedAt.plusDays(1), fooAskedAt.plusDays(2));
         assertFalse(questions.contains(questionByFoo));
 
-        questions = questionDao.getTop(Integer.MAX_VALUE);
-        assertEquals(questions, questionDao.getAll());
-        questions = questionDao.getTop(5);
+        questions = questionDao.findTop(Integer.MAX_VALUE);
+        assertEquals(questions, questionDao.findAll());
+        questions = questionDao.findTop(5);
         assertTrue(questions.size() < 5);
-        questions = questionDao.getTop(0);
+        questions = questionDao.findTop(0);
         assertTrue(questions.isEmpty());
     }
 }

@@ -7,7 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.transaction.annotation.Transactional;
 
-// TODO extract getById, getAll, deleteAll to this base class using reflection
+// TODO extract findById, findAll, deleteAll to this base class using reflection
 
 @Transactional
 public abstract class HibernateDao<T> implements Dao<T> {

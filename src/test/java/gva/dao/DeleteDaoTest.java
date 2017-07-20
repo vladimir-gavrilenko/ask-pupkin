@@ -29,16 +29,16 @@ public class DeleteDaoTest extends DaoTest {
     public void testDeleteDataFromDb() throws Exception {
         initTestData(userDao, questionDao, answerDao);
 
-        assertTrue(answerDao.getAll().contains(answerByBar));
+        assertTrue(answerDao.findAll().contains(answerByBar));
         answerDao.delete(answerByBar);
-        assertFalse(answerDao.getAll().contains(answerByBar));
+        assertFalse(answerDao.findAll().contains(answerByBar));
 
-        assertTrue(questionDao.getAll().contains(questionByFoo));
+        assertTrue(questionDao.findAll().contains(questionByFoo));
         questionDao.delete(questionByFoo);
-        assertFalse(questionDao.getAll().contains(questionByFoo));
+        assertFalse(questionDao.findAll().contains(questionByFoo));
 
-        assertTrue(userDao.getAll().contains(foo));
+        assertTrue(userDao.findAll().contains(foo));
         userDao.delete(foo);
-        assertFalse(userDao.getAll().contains(foo));
+        assertFalse(userDao.findAll().contains(foo));
     }
 }

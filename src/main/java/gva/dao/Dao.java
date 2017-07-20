@@ -8,9 +8,9 @@ import java.util.List;
 public interface Dao<T> {
     void create(T object) throws DaoException;
 
-    List<T> getAll() throws DaoException;
+    List<T> findAll() throws DaoException;
 
-    T getById(int id) throws DaoException;
+    T findById(int id) throws DaoException;
 
     void update(T object) throws DaoException;
 

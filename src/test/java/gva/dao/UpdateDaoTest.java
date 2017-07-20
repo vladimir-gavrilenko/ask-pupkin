@@ -29,15 +29,15 @@ public class UpdateDaoTest extends DaoTest {
 
         foo.setName(FOO_STRING);
         userDao.update(foo);
-        assertEquals(FOO_STRING, userDao.getById(foo.getId()).getName());
+        assertEquals(FOO_STRING, userDao.findById(foo.getId()).getName());
 
         questionByFoo.setContent(FOO_STRING);
         questionDao.update(questionByFoo);
-        assertEquals(FOO_STRING, questionDao.getById(questionByFoo.getId()).getContent());
+        assertEquals(FOO_STRING, questionDao.findById(questionByFoo.getId()).getContent());
 
         boolean answerByBarWasCorrect = answerByBar.isCorrect();
         answerByBar.setCorrect(!answerByBarWasCorrect);
         answerDao.update(answerByBar);
-        assertEquals(!answerByBarWasCorrect, answerDao.getById(answerByBar.getId()).isCorrect());
+        assertEquals(!answerByBarWasCorrect, answerDao.findById(answerByBar.getId()).isCorrect());
     }
 }

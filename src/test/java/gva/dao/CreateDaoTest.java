@@ -26,14 +26,14 @@ public class CreateDaoTest extends DaoTest {
     public void testInsertDataIntoDb() throws Exception {
         initTestData(userDao, questionDao, answerDao);
 
-        assertEquals(foo, userDao.getById(foo.getId()));
-        assertEquals(bar, userDao.getById(bar.getId()));
-        assertEquals(baz, userDao.getById(baz.getId()));
+        assertEquals(foo, userDao.findById(foo.getId()));
+        assertEquals(bar, userDao.findById(bar.getId()));
+        assertEquals(baz, userDao.findById(baz.getId()));
 
-        assertEquals(questionByFoo, questionDao.getById(questionByFoo.getId()));
+        assertEquals(questionByFoo, questionDao.findById(questionByFoo.getId()));
 
-        assertEquals(answerByBar, answerDao.getById(answerByBar.getId()));
-        assertEquals(answerByBaz, answerDao.getById(answerByBaz.getId()));
+        assertEquals(answerByBar, answerDao.findById(answerByBar.getId()));
+        assertEquals(answerByBaz, answerDao.findById(answerByBaz.getId()));
 
         clearTestData(userDao, questionDao, answerDao);
     }

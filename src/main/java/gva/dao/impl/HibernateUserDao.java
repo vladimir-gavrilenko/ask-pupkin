@@ -22,7 +22,7 @@ public class HibernateUserDao extends HibernateDao<User> implements UserDao {
     }
 
     @Override
-    public List<User> getAll() throws DaoException {
+    public List<User> findAll() throws DaoException {
         try {
             Query<User> query = getSession().createQuery(
                     "from User", User.class
@@ -34,7 +34,7 @@ public class HibernateUserDao extends HibernateDao<User> implements UserDao {
     }
 
     @Override
-    public User getById(int id) throws DaoException {
+    public User findById(int id) throws DaoException {
         try {
             return getSession().get(User.class, id);
         } catch (HibernateException exception) {
@@ -54,12 +54,12 @@ public class HibernateUserDao extends HibernateDao<User> implements UserDao {
     }
 
     @Override
-    public User getByName(String name) throws DaoException {
+    public User findByName(String name) throws DaoException {
         return getBy(User.NAME, name);
     }
 
     @Override
-    public User getByEmail(String email) throws DaoException {
+    public User findByEmail(String email) throws DaoException {
         return getBy(User.EMAIL, email);
     }
 

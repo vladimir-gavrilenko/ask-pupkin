@@ -24,7 +24,7 @@ public class HibernateQuestionDao extends HibernateDao<Question> implements Ques
     }
 
     @Override
-    public List<Question> getAll() throws DaoException {
+    public List<Question> findAll() throws DaoException {
         try {
             Query<Question> query = getSession().createQuery(
                     "from Question", Question.class
@@ -36,7 +36,7 @@ public class HibernateQuestionDao extends HibernateDao<Question> implements Ques
     }
 
     @Override
-    public Question getById(int id) throws DaoException {
+    public Question findById(int id) throws DaoException {
         try {
             return getSession().get(Question.class, id);
         } catch (HibernateException exception) {
@@ -56,7 +56,7 @@ public class HibernateQuestionDao extends HibernateDao<Question> implements Ques
     }
 
     @Override
-    public List<Question> getTop(int count) throws DaoException {
+    public List<Question> findTop(int count) throws DaoException {
         try {
             Query<Question> query = getSession().createQuery(
                     "from Question order by rating desc", Question.class
@@ -68,7 +68,7 @@ public class HibernateQuestionDao extends HibernateDao<Question> implements Ques
     }
 
     @Override
-    public List<Question> getBetween(LocalDateTime from, LocalDateTime to) throws DaoException {
+    public List<Question> findBetween(LocalDateTime from, LocalDateTime to) throws DaoException {
         try {
             Query<Question> query = getSession().createQuery(
                     "from Question where timeStamp between :fromDate and :toDate", Question.class
@@ -82,7 +82,7 @@ public class HibernateQuestionDao extends HibernateDao<Question> implements Ques
     }
 
     @Override
-    public List<Question> getAskedBy(User author) throws DaoException {
+    public List<Question> findAskedBy(User author) throws DaoException {
         try {
             Query<Question> query = getSession().createQuery(
                     "from Question where author.id = :authorId", Question.class

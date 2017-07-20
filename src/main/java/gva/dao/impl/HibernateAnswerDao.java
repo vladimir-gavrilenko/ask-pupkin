@@ -24,7 +24,7 @@ public class HibernateAnswerDao extends HibernateDao<Answer> implements AnswerDa
     }
 
     @Override
-    public List<Answer> getAll() throws DaoException {
+    public List<Answer> findAll() throws DaoException {
         try {
             Query<Answer> query = getSession().createQuery(
                     "from Answer", Answer.class
@@ -36,7 +36,7 @@ public class HibernateAnswerDao extends HibernateDao<Answer> implements AnswerDa
     }
 
     @Override
-    public Answer getById(int id) throws DaoException {
+    public Answer findById(int id) throws DaoException {
         try {
             return getSession().get(Answer.class, id);
         } catch (HibernateException exception) {
@@ -55,7 +55,7 @@ public class HibernateAnswerDao extends HibernateDao<Answer> implements AnswerDa
     }
 
     @Override
-    public List<Answer> getBetween(LocalDateTime from, LocalDateTime to) throws DaoException {
+    public List<Answer> findBetween(LocalDateTime from, LocalDateTime to) throws DaoException {
         try {
             Query<Answer> query = getSession().createQuery(
                     "from Answer where timeStamp between :fromDate and :toDate", Answer.class
@@ -69,7 +69,7 @@ public class HibernateAnswerDao extends HibernateDao<Answer> implements AnswerDa
     }
 
     @Override
-    public List<Answer> getFor(Question question) throws DaoException {
+    public List<Answer> findFor(Question question) throws DaoException {
         try {
             Query<Answer> query = getSession().createQuery(
                     "from Answer where question.id = :questionId", Answer.class

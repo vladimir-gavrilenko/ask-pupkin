@@ -21,7 +21,7 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public List<Question> getTop(int count) {
         try {
-            return questionDao.getTop(count);
+            return questionDao.findTop(count);
         } catch (DaoException e) {
             e.printStackTrace();
             return null;
