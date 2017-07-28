@@ -4,14 +4,21 @@
 <head>
     <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.7/css/bootstrap.min.css"
           th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"
-          rel="stylesheet" media="screen" />
+          rel="stylesheet" media="screen"/>
     <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.7/js/bootstrap.min.js"
           th:href="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"
-          rel="stylesheet" media="screen" />
+          rel="stylesheet" media="screen"/>
     <link href="../../resources/css/sticky-footer-navbar.css"
           th:href="@{/resources/css/sticky-footer-navbar.css}" rel="stylesheet"/>
     <script src="http://cdn.jsdelivr.net/webjars/jquery/3.2.1/jquery.min.js"
             th:src="@{/webjars/jquery/3.2.1/jquery.min.js}"></script>
+    <!--
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/4.0.1/bootstrap-material-design.min.css">
+    -->
+
 </head>
 <body>
 
@@ -19,31 +26,16 @@
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
             <a class="navbar-brand" href="#">Stack Underflow</a>
         </div>
-        <div id="navbar" class="collapse navbar-collapse">
+        <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li class="dropdown-header">Nav header</li>
-                        <li><a href="#">Separated link</a></li>
-                        <li><a href="#">One more separated link</a></li>
-                    </ul>
-                </li>
+                <li class="active"><a href="/">Top Questions</a></li>
+                <li><a href="/new">New Questions</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/login">Log in</a></li>
+                <li><a href="/signup">Sign up</a></li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>
@@ -51,21 +43,61 @@
 
 <!-- Begin page content -->
 <div class="container">
+
     <div class="page-header">
-        <h1>Sticky footer with fixed navbar</h1>
+        <h2>Top Questions</h2>
     </div>
-    <p class="lead">Pin a fixed-height footer to the bottom of the viewport in desktop browsers with this custom HTML and CSS. A fixed navbar has been added with <code>padding-top: 60px;</code> on the <code>body &gt; .container</code>.</p>
-    <p>Back to <a href="../sticky-footer">the default sticky footer</a> minus the navbar.</p>
-    <div>
-        <div th:each="question : ${questions}">
-            <div th:text="${question.getHeader()}">question...</div>
+
+    <div th:each="question : ${questions}">
+        <div class="panel panel-default container">
+            <div class="panel-body">
+                <div class="col-md-2 vertical-align text-center">
+                    <div class="col-md-3 ">
+                        <div class="row">
+                            <a href="#"><span class="glyphicon glyphicon-chevron-up"></span></a>
+                        </div>
+                        <div class="row" th:text="${question.getRating()}">
+                            43
+                        </div>
+                        <div class="row">
+                            <a href="#"><span class="glyphicon glyphicon-chevron-down"></span></a>
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <img class="avatar" src="../../resources/img/default.jpg"
+                             th:src="'/resources/img/' + ${question.getAuthor().getAvatarPath()}">
+                    </div>
+                </div>
+                <div class="col-md-10">
+                    <a href="#" th:href="'/question/' + ${question.getId()}">
+                        <h4 th:text="${question.getHeader()}"><strong>Question's header</strong></h4>
+                    </a>
+                    <div class="question-content" th:text="${question.getContent()}">
+                        Folly words widow one downs few age every seven.
+                        If miss part by fact he park just shew. Discovered
+                        had get considered projection who favourable.
+                        Necessary up knowledge it tolerably. Unwilling departure
+                        education is be dashwoods or an. Use off agreeable law
+                        unwilling sir deficient curiosity instantly. Easy mind
+                        life fact with see has bore ten. Parish any chatty can elinor
+                        direct for former. Up as meant widow equal an share least.
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
 
+</div>
 <footer class="footer">
     <div class="container">
-        <p class="text-muted">Place sticky footer content here.</p>
+        <h4 class="text-muted text-center">
+            <a href="https://www.linkedin.com/in/vladimir-gavrilenko-30430a112/" target="_blank">
+                <img src="https://cdn3.iconfinder.com/data/icons/socialnetworking/16/linkedin.png">
+            </a>
+            <a href="https://github.com/vladimir-gavrilenko" target="_blank">
+                <img src="https://cdn3.iconfinder.com/data/icons/popular-services-brands/512/github-16.png">
+            </a>
+        </h4>
     </div>
 </footer>
 </body>

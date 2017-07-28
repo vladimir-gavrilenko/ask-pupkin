@@ -37,3 +37,24 @@ body > .container {
 code {
     font-size: 80%;
 }
+
+.vertical-align {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-default .navbar-nav > li:hover > a {
+    color: #555;
+    background-color: #e7e7e7;
+}
+
+.avatar {
+    width: 64px;
+    height: 64px;
+}
+
+.question-content {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
