@@ -10,6 +10,8 @@ import java.util.List;
 public interface QuestionDao extends Dao<Question> {
     List<Question> findTop(int count) throws DaoException;
 
+    List<Question> findNew() throws DaoException;
+
     List<Question> findBetween(LocalDateTime from, LocalDateTime to) throws DaoException;
 
     List<Question> findAskedBy(User author) throws DaoException;

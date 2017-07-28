@@ -24,9 +24,15 @@ public class MainController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/")
     public String index(Model model) {
-        List<Question> questions = questionService.getTop(Integer.MAX_VALUE);
-        System.out.println(questions);
+        List<Question> questions = questionService.findTop(Integer.MAX_VALUE);
         model.addAttribute("questions", questions);
         return "index";
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/new")
+    public String newQuestions(Model model) {
+        List<Question> questions = questionService.findNew();
+        model.addAttribute("questions", questions);
+        return "new";
     }
 }

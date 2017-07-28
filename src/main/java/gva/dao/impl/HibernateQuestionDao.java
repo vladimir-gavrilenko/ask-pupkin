@@ -68,6 +68,18 @@ public class HibernateQuestionDao extends HibernateDao<Question> implements Ques
     }
 
     @Override
+    public List<Question> findNew() throws DaoException {
+        try {
+            Query<Question> query = getSession().createQuery(
+                    "from Question order by ts desc", Question.class
+            );
+            return query.getResultList();
+        } catch (HibernateException exception) {
+            throw new DaoException(exception);
+        }
+    }
+
+    @Override
     public List<Question> findBetween(LocalDateTime from, LocalDateTime to) throws DaoException {
         try {
             Query<Question> query = getSession().createQuery(
