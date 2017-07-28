@@ -41,7 +41,7 @@ public class Question implements Serializable {
     private int rating;
 
     @Column(name = TIMESTAMP, nullable = false)
-    private LocalDateTime timeStamp = LocalDateTime.now();
+    private LocalDateTime timeStamp;
 
     @ManyToMany(mappedBy = "likedQuestions")
     private Set<User> likedBy = new HashSet<>();
@@ -131,5 +131,10 @@ public class Question implements Serializable {
 
     public Set<User> getLikedBy() {
         return likedBy;
+    }
+
+    @PrePersist
+    public void prePersist() {
+        timeStamp = LocalDateTime.now();
     }
 }

@@ -40,7 +40,7 @@ public class Answer implements Serializable {
     private Boolean isCorrect = null;
 
     @Column(name = TIMESTAMP, nullable = false)
-    private LocalDateTime timeStamp = LocalDateTime.now();
+    private LocalDateTime timeStamp;
 
     public Answer() {
     }
@@ -123,5 +123,10 @@ public class Answer implements Serializable {
 
     public void setTimeStamp(LocalDateTime timeStamp) {
         this.timeStamp = timeStamp;
+    }
+
+    @PrePersist
+    public void prePersist() {
+        timeStamp = LocalDateTime.now();
     }
 }
