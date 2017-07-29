@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<nav th:fragment="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Stack Underflow</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li th:classappend="${#httpServletRequest.getRequestURI() == '/' ? 'active':''}"><a href="/">Top Questions</a></li>
+                <li th:classappend="${#httpServletRequest.getRequestURI() == '/new' ? 'active':''}"><a href="/new">New Questions</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li th:classappend="${#httpServletRequest.getRequestURI() == '/login' ? 'active':''}"><a href="/login">Log in</a></li>
+                <li th:classappend="${#httpServletRequest.getRequestURI() == '/signup' ? 'active':''}"><a href="/signup">Sign up</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+</html>

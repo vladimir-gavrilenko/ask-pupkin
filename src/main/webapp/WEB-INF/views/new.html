@@ -1,106 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
-<head>
-    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.7/css/bootstrap.min.css"
-          th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"
-          rel="stylesheet" media="screen"/>
-    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.7/js/bootstrap.min.js"
-          th:href="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"
-          rel="stylesheet" media="screen"/>
-    <link href="../../resources/css/sticky-footer-navbar.css"
-          th:href="@{/resources/css/sticky-footer-navbar.css}" rel="stylesheet"/>
-    <script src="http://cdn.jsdelivr.net/webjars/jquery/3.2.1/jquery.min.js"
-            th:src="@{/webjars/jquery/3.2.1/jquery.min.js}"></script>
-    <!--
-    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700">
-    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
-
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/4.0.1/bootstrap-material-design.min.css">
-    -->
-
-</head>
+<head th:replace="fragments/header :: header"></head>
 <body>
-
-<!-- Fixed navbar -->
-<nav class="navbar navbar-default navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#">Stack Underflow</a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li th:classappend="${#httpServletRequest.getRequestURI() == '/' ? 'active':''}"><a href="/">Top Questions</a></li>
-                <li th:classappend="${#httpServletRequest.getRequestURI() == '/new' ? 'active':''}"><a href="/new">New Questions</a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li th:classappend="${#httpServletRequest.getRequestURI() == '/login' ? 'active':''}"><a href="/login">Log in</a></li>
-                <li th:classappend="${#httpServletRequest.getRequestURI() == '/signup' ? 'active':''}"><a href="/signup">Sign up</a></li>
-            </ul>
-        </div><!--/.nav-collapse -->
-    </div>
-</nav>
-
-<!-- Begin page content -->
+<div th:replace="fragments/navbar :: navbar"></div>
 <div class="container">
-
     <div class="page-header">
         <h2>New Questions</h2>
     </div>
-
-    <div th:each="question : ${questions}">
-        <div class="panel panel-default container">
-            <div class="panel-body">
-                <div class="col-md-2 vertical-align text-center">
-                    <div class="col-md-3 ">
-                        <div class="row">
-                            <a href="#"><span class="glyphicon glyphicon-chevron-up"></span></a>
-                        </div>
-                        <div class="row" th:text="${question.getRating()}">
-                            43
-                        </div>
-                        <div class="row">
-                            <a href="#"><span class="glyphicon glyphicon-chevron-down"></span></a>
-                        </div>
-                    </div>
-                    <div class="col-md-9">
-                        <img class="avatar" src="../../resources/img/default.jpg"
-                             th:src="'/resources/img/' + ${question.getAuthor().getAvatarPath()}">
-                    </div>
-                </div>
-                <div class="col-md-10">
-                    <a href="#" th:href="'/question/' + ${question.getId()}">
-                        <h4 th:text="${question.getHeader()}"><strong>Question's header</strong></h4>
-                    </a>
-                    <div class="question-content" th:text="${question.getContent()}">
-                        Folly words widow one downs few age every seven.
-                        If miss part by fact he park just shew. Discovered
-                        had get considered projection who favourable.
-                        Necessary up knowledge it tolerably. Unwilling departure
-                        education is be dashwoods or an. Use off agreeable law
-                        unwilling sir deficient curiosity instantly. Easy mind
-                        life fact with see has bore ten. Parish any chatty can elinor
-                        direct for former. Up as meant widow equal an share least.
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    <div th:replace="fragments/questions-list :: questions-list" ></div>
 </div>
-<footer class="footer">
-    <div class="container">
-        <h4 class="text-muted text-center">
-            <a href="https://www.linkedin.com/in/vladimir-gavrilenko-30430a112/" target="_blank">
-                <img src="https://cdn3.iconfinder.com/data/icons/socialnetworking/16/linkedin.png">
-            </a>
-            <a href="https://github.com/vladimir-gavrilenko" target="_blank">
-                <img src="https://cdn3.iconfinder.com/data/icons/popular-services-brands/512/github-16.png">
-            </a>
-        </h4>
-    </div>
-</footer>
+<div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>
-
-<!--view-source:http://getbootstrap.com/examples/sticky-footer-navbar/-->

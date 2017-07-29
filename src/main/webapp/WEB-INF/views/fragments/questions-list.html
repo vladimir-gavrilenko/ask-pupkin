@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="questions-list" th:each="question : ${questions}">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="col-md-2 vertical-align text-center">
+                <div class="col-md-3 ">
+                    <div class="row">
+                        <a href="#"><span class="glyphicon glyphicon-chevron-up"></span></a>
+                    </div>
+                    <div class="row" th:text="${question.getRating()}">
+                        43
+                    </div>
+                    <div class="row">
+                        <a href="#"><span class="glyphicon glyphicon-chevron-down"></span></a>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <img class="avatar" src="../../resources/img/default.jpg"
+                         th:src="'/resources/img/' + ${question.getAuthor().getAvatarPath()}">
+                </div>
+            </div>
+            <div class="col-md-10">
+                <a href="#" th:href="'/question/' + ${question.getId()}">
+                    <h4 th:text="${question.getHeader()}"><strong>Question's header</strong></h4>
+                </a>
+                <div class="question-content" th:text="${question.getContent()}">
+                    Folly words widow one downs few age every seven.
+                    If miss part by fact he park just shew. Discovered
+                    had get considered projection who favourable.
+                    Necessary up knowledge it tolerably. Unwilling departure
+                    education is be dashwoods or an. Use off agreeable law
+                    unwilling sir deficient curiosity instantly. Easy mind
+                    life fact with see has bore ten. Parish any chatty can elinor
+                    direct for former. Up as meant widow equal an share least.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</html>
