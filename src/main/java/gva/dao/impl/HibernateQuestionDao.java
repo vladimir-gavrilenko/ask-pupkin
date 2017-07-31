@@ -24,38 +24,6 @@ public class HibernateQuestionDao extends HibernateDao<Question> implements Ques
     }
 
     @Override
-    public List<Question> findAll() throws DaoException {
-        try {
-            Query<Question> query = getSession().createQuery(
-                    "from Question", Question.class
-            );
-            return query.getResultList();
-        } catch (HibernateException exception) {
-            throw new DaoException(exception);
-        }
-    }
-
-    @Override
-    public Question findById(int id) throws DaoException {
-        try {
-            return getSession().get(Question.class, id);
-        } catch (HibernateException exception) {
-            throw new DaoException(exception);
-        }
-    }
-
-
-    @Override
-    public void deleteAll() throws DaoException {
-        try {
-            Query query = getSession().createQuery("delete from Question");
-            query.executeUpdate();
-        } catch (HibernateException exception) {
-            throw new DaoException(exception);
-        }
-    }
-
-    @Override
     public List<Question> findTop(int count) throws DaoException {
         try {
             Query<Question> query = getSession().createQuery(

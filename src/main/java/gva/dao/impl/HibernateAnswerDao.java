@@ -24,37 +24,6 @@ public class HibernateAnswerDao extends HibernateDao<Answer> implements AnswerDa
     }
 
     @Override
-    public List<Answer> findAll() throws DaoException {
-        try {
-            Query<Answer> query = getSession().createQuery(
-                    "from Answer", Answer.class
-            );
-            return query.getResultList();
-        } catch (HibernateException exception) {
-            throw new DaoException(exception);
-        }
-    }
-
-    @Override
-    public Answer findById(int id) throws DaoException {
-        try {
-            return getSession().get(Answer.class, id);
-        } catch (HibernateException exception) {
-            throw new DaoException(exception);
-        }
-    }
-
-    @Override
-    public void deleteAll() throws DaoException {
-        try {
-            Query query = getSession().createQuery("delete from Answer");
-            query.executeUpdate();
-        } catch (HibernateException exception) {
-            throw new DaoException(exception);
-        }
-    }
-
-    @Override
     public List<Answer> findBetween(LocalDateTime from, LocalDateTime to) throws DaoException {
         try {
             Query<Answer> query = getSession().createQuery(
