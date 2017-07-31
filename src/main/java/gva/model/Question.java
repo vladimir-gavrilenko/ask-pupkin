@@ -41,7 +41,7 @@ public class Question implements Serializable {
     private int rating;
 
     @Column(name = TIMESTAMP, nullable = false)
-    private LocalDateTime timeStamp;
+    private LocalDateTime timeStamp = LocalDateTime.now(); // FIXME migrate hibernate session api to jpa
 
     @ManyToMany(mappedBy = "likedQuestions")
     private Set<User> likedBy = new HashSet<>();

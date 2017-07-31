@@ -40,7 +40,7 @@ public class Answer implements Serializable {
     private Boolean isCorrect = null;
 
     @Column(name = TIMESTAMP, nullable = false)
-    private LocalDateTime timeStamp;
+    private LocalDateTime timeStamp = LocalDateTime.now(); // FIXME migrate hibernate session api to jpa
 
     public Answer() {
     }
