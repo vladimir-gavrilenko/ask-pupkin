@@ -38,7 +38,7 @@ code {
     font-size: 80%;
 }
 
-.vertical-align {
+.vertical-align-center {
     display: flex;
     align-items: center;
 }
@@ -51,6 +51,17 @@ code {
 .avatar {
     width: 64px;
     height: 64px;
+    margin-bottom: 10px;
+}
+
+.avatar-large {
+    width: 128px;
+    height: 128px;
+    margin: 20px 0 10px 0;
+}
+
+.rating-col-large {
+    margin-top: 20px;
 }
 
 .question-content {
