@@ -28,8 +28,8 @@
             </div>
         </div>
         <div class="col-md-9">
-            <h2 th:text="${question.getHeader()}">Header</h2>
-            <div th:text="${question.getContent()}">content</div>
+            <h2 th:utext="${question.getHeader()}">Header</h2>
+            <div th:utext="${question.getContent()}">content</div>
         </div>
     </div>
     <hr>
@@ -38,7 +38,7 @@
             <div class="panel-body">
                 <div class="col-md-2 text-center">
                     <img class="avatar" th:title="${answer.getAuthor().getName()}" src="../../resources/img/default.jpg"
-                         th:src="'/resources/img/' + ${question.getAuthor().getAvatarPath()}">
+                         th:src="'/resources/img/' + ${answer.getAuthor().getAvatarPath()}">
                     <div>
                         <label>correct!
                             <input type="checkbox" readonly onclick="return false;"
@@ -47,12 +47,13 @@
                     </div>
                 </div>
                 <div class="col-md-10">
-                    <div th:text="${answer.getContent()}">Answer</div>
+                    <div th:utext="${answer.getContent()}">Answer</div>
                 </div>
             </div>
         </div>
     </div>
     <hr>
+    <!-- TODO allow only <code> and/or <pre> tags -->
     <form action="#" th:action="@{/answer}" method="post">
         <div class="form-group">
             <textarea class="form-control" id="answer-text-area"

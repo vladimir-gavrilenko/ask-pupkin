@@ -35,7 +35,11 @@ body > .container {
 }
 
 code {
-    font-size: 80%;
+    font-size: 100%;
+}
+code.block {
+    display:block;
+    white-space:pre-wrap;
 }
 
 .vertical-align-center {

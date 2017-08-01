@@ -24,7 +24,7 @@
                 <a href="#" th:href="'/question/' + ${question.getId()}">
                     <h4 th:text="${question.getHeader()}"><strong>Question's header</strong></h4>
                 </a>
-                <div class="question-content" th:text="${question.getContent()}">
+                <div class="question-content" th:utext="${question.getContent()}">
                     Folly words widow one downs few age every seven.
                     If miss part by fact he park just shew. Discovered
                     had get considered projection who favourable.
