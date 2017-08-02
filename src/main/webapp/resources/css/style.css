@@ -35,8 +35,10 @@ body > .container {
 }
 
 code {
-    font-size: 100%;
+    font-size: 90%;
 }
+
+/* TODO use <pre>*/
 code.block {
     display:block;
     white-space:pre-wrap;
