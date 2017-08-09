@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <nav th:fragment="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
@@ -11,8 +11,9 @@
                 <li th:classappend="${#httpServletRequest.getRequestURI() == '/new' ? 'active':''}"><a href="/new">New Questions</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li th:classappend="${#httpServletRequest.getRequestURI() == '/login' ? 'active':''}"><a href="/login">Log in</a></li>
-                <li th:classappend="${#httpServletRequest.getRequestURI() == '/signup' ? 'active':''}"><a href="/signup">Sign up</a></li>
+                <li sec:authorize="isAnonymous()"><a href="/login" th:href="@{/login}">Log in</a></li>
+                <li sec:authorize="isAnonymous()"><a href="/signup" th:href="@{/signup}">Sign up</a></li>
+                <li sec:authorize="isAuthenticated()"><a href="/logout" th:href="@{/logout}">Log out</a></li>
             </ul>
         </div>
     </div>

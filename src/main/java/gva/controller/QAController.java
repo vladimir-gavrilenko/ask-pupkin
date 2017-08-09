@@ -6,10 +6,7 @@ import gva.service.QAService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,21 +19,21 @@ public class QAController {
         this.qaService = qaService;
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/")
+    @GetMapping("/")
     public String topQuestions(Model model) {
         List<Question> questions = qaService.findTopQuestions(Integer.MAX_VALUE);
         model.addAttribute("questions", questions);
         return "top";
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/new")
+    @GetMapping("/new")
     public String newQuestions(Model model) {
         List<Question> questions = qaService.findNewQuestions();
         model.addAttribute("questions", questions);
         return "new";
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/question/{id}")
+    @GetMapping("/question/{id}")
     public String question(Model model, @PathVariable int id) {
         Question question = qaService.findQuestionById(id);
         List<Answer> answers = qaService.findAnswersFor(question);
@@ -45,7 +42,7 @@ public class QAController {
         return "question";
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/answer")
+    @PostMapping("/answer")
     public String answer(@ModelAttribute Answer answer) {
         System.out.println(answer);
         return "redirect:/question/" + answer.getQuestion().getId();

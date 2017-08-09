@@ -8,10 +8,10 @@ import org.springframework.context.annotation.Import;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @Configuration
-@Import(PersistenceConfig.class)
+@Import({PersistenceConfig.class, SecurityConfig.class})
 @ComponentScan(basePackages = {"gva"},
         excludeFilters = {
-            @Filter(type=FilterType.ANNOTATION, value=EnableWebMvc.class)
+            @Filter(type=FilterType.ANNOTATION, value=Configuration.class)
         }
 )
 public class RootConfig {

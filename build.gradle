@@ -30,10 +30,17 @@ targetCompatibility = javaVersion
 dependencies {
     compile group: 'org.springframework', name: 'spring-webmvc', version: springVersion
     compile group: 'org.springframework', name: 'spring-orm', version: springVersion
+
+    compile group: 'org.springframework.security', name: 'spring-security-core', version: springSecurityVersion
+    compile group: 'org.springframework.security', name: 'spring-security-config', version: springSecurityVersion
+    compile group: 'org.springframework.security', name: 'spring-security-web', version: springSecurityVersion
+
+    compile group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity4', version: thymeleafExtrasVersion
+    compile group: 'org.thymeleaf', name: 'thymeleaf-spring4', version: thymeleafVersion
+
     compile group: 'org.webjars', name: 'bootstrap', version: bootstrapVersion
     compile group: 'org.webjars', name: 'jquery', version: jqueryVersion
     compile group: 'org.thymeleaf', name: 'thymeleaf', version: thymeleafVersion
-    compile group: 'org.thymeleaf', name: 'thymeleaf-spring4', version: thymeleafVersion
     compile group: 'org.hibernate', name: 'hibernate-core', version: hibernateCoreVersion
     compile group: 'org.hibernate', name: 'hibernate-validator', version: hibernateValidatorVersion
     compile group: 'org.postgresql', name: 'postgresql', version: psqlVersion
