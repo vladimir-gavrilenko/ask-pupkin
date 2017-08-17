@@ -33,9 +33,8 @@ public class User implements Serializable {
     @Column(name = NAME, nullable = false, unique = true)
     private String name;
 
-    // md5('name:password')
-    @Length(min = 32, max = 32)
-    @Column(name = PASSWORD_HASH, nullable = false)//, columnDefinition = "bpchar")
+    @Length(max = 60)
+    @Column(name = PASSWORD_HASH, nullable = false)
     private String passwordHash;
 
     @Column(name = AVATAR_PATH, nullable = false)

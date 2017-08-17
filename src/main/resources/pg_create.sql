@@ -9,7 +9,7 @@ CREATE TABLE "users" (
   "id" SERIAL NOT NULL,
   "email" VARCHAR(128) NOT NULL UNIQUE,
   "name" VARCHAR(128) NOT NULL UNIQUE,
-  "password_hash" VARCHAR(32) NOT NULL, -- hotfix for hibernate
+  "password_hash" VARCHAR(60) NOT NULL, -- hotfix for hibernate
   "avatar_path" VARCHAR(512) NOT NULL DEFAULT 'default.jpg', -- TODO maybe blob?
   CONSTRAINT users_pk PRIMARY KEY ("id")
 ) WITH (

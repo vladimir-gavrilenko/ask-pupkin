@@ -1,17 +1,17 @@
 package gva.controller;
 
-import gva.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class UserController {
-    private UserService userService;
+    private UserDetailsService userDetailsService;
 
     @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
+    public UserController(UserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
     }
 
     @GetMapping("/login")
