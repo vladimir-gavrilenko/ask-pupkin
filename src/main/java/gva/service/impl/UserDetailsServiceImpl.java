@@ -1,8 +1,8 @@
 package gva.service.impl;
 
-import gva.dao.UserDao;
 import gva.model.User;
 import gva.model.UserDetailsImpl;
+import gva.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -11,18 +11,18 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
-    private final UserDao userDao;
+    private final UserService userService;
 
     @Autowired
-    public UserDetailsServiceImpl(UserDao userDao) {
-        this.userDao = userDao;
+    public UserDetailsServiceImpl(UserService userService) {
+        this.userService = userService;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userDao.findByName(username);
+        User user = userService.findByName(username);
         if (user == null) {
-            throw new UsernameNotFoundException("Failed to find {" + username + "}");
+            throw new UsernameNotFoundException("Can't find user with name '" + username + "'");
         }
         return new UserDetailsImpl(user);
     }

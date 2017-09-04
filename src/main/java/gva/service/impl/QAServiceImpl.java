@@ -2,7 +2,6 @@ package gva.service.impl;
 
 import gva.dao.AnswerDao;
 import gva.dao.QuestionDao;
-import gva.exception.DaoException;
 import gva.model.Answer;
 import gva.model.Question;
 import gva.service.QAService;
@@ -13,8 +12,8 @@ import java.util.List;
 
 @Service
 public class QAServiceImpl implements QAService {
-    private QuestionDao questionDao;
-    private AnswerDao answerDao;
+    private final QuestionDao questionDao;
+    private final AnswerDao answerDao;
 
     @Autowired
     public QAServiceImpl(QuestionDao questionDao, AnswerDao answerDao) {
@@ -24,41 +23,21 @@ public class QAServiceImpl implements QAService {
 
     @Override
     public List<Question> findTopQuestions(int count) {
-        try {
-            return questionDao.findTop(count);
-        } catch (DaoException e) {
-            e.printStackTrace();
-            return null;
-        }
+        return questionDao.findTop(count);
     }
 
     @Override
     public List<Question> findNewQuestions() {
-        try {
-            return questionDao.findNew();
-        } catch (DaoException e) {
-            e.printStackTrace();
-            return null;
-        }
+        return questionDao.findNew();
     }
 
     @Override
     public Question findQuestionById(int id) {
-        try {
-            return questionDao.findById(id);
-        } catch (DaoException e) {
-            e.printStackTrace();
-            return null;
-        }
+        return questionDao.findById(id);
     }
 
     @Override
     public List<Answer> findAnswersFor(Question question) {
-        try {
-            return answerDao.findFor(question);
-        } catch (DaoException e) {
-            e.printStackTrace();
-            return null;
-        }
+        return answerDao.findFor(question);
     }
 }
