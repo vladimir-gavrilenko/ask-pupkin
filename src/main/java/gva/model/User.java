@@ -22,8 +22,9 @@ public class User implements Serializable {
     public static final String AVATAR_PATH = "avatar_path";
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @SequenceGenerator(name = "userSeq", sequenceName = "users_id_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "userSeq")
+    private Long id;
 
     @NotBlank
     @Column(name = EMAIL, nullable = false, unique = true)
@@ -83,7 +84,7 @@ public class User implements Serializable {
         return Objects.hash(id, email, name, passwordHash, avatarPath);
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 

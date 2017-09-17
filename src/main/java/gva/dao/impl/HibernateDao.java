@@ -41,7 +41,7 @@ public abstract class HibernateDao<T> implements Dao<T> {
     }
 
     @Override
-    public T findById(int id) throws DaoException {
+    public T findById(Long id) throws DaoException {
         try {
             return getSession().get(persistentClass, id);
         } catch (HibernateException exception) {
@@ -61,6 +61,7 @@ public abstract class HibernateDao<T> implements Dao<T> {
 
     @Override
     public void create(T object) throws DaoException {
+        System.out.println(object);
         execute(Session::save, object);
     }
 

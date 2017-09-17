@@ -10,7 +10,7 @@ public interface Dao<T> {
 
     List<T> findAll() throws DaoException;
 
-    T findById(int id) throws DaoException;
+    T findById(Long id) throws DaoException;
 
     void update(T object) throws DaoException;
 

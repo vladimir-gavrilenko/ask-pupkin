@@ -34,7 +34,7 @@ public class QAController {
     }
 
     @GetMapping("/question/{id}")
-    public String question(Model model, @PathVariable int id) {
+    public String question(Model model, @PathVariable Long id) {
         Question question = qaService.findQuestionById(id);
         List<Answer> answers = qaService.findAnswersFor(question);
         model.addAttribute("question", question);

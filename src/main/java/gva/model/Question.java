@@ -23,8 +23,9 @@ public class Question implements Serializable {
     public static final String TIMESTAMP = "ts";
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @SequenceGenerator(name = "questionSeq", sequenceName = "questions_id_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "questionSeq")
+    private Long id;
 
     @NotBlank
     @Column(name = HEADER, nullable = false)
@@ -85,7 +86,7 @@ public class Question implements Serializable {
         likedBy.add(user);
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 

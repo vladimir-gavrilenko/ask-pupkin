@@ -32,7 +32,7 @@ public class QAServiceImpl implements QAService {
     }
 
     @Override
-    public Question findQuestionById(int id) {
+    public Question findQuestionById(Long id) {
         return questionDao.findById(id);
     }
 

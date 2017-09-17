@@ -10,7 +10,7 @@ public interface QAService {
 
     List<Question> findNewQuestions();
 
-    Question findQuestionById(int id);
+    Question findQuestionById(Long id);
 
     List<Answer> findAnswersFor(Question question);
 }

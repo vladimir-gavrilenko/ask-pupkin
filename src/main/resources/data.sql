@@ -256,3 +256,7 @@ UPDATE questions SET ts = (NOW() - INTERVAL '2 days') WHERE id = 1;
 UPDATE answers SET ts = (NOW() - INTERVAL '2 days') WHERE question_id =1;
 UPDATE questions SET ts = (NOW() - INTERVAL '1 day') WHERE id = 2;
 UPDATE answers SET ts = (NOW() - INTERVAL '1 day') WHERE question_id = 2;
+
+SELECT setval('users_id_seq', (SELECT max(id) FROM users));
+SELECT setval('questions_id_seq', (SELECT max(id) FROM questions));
+SELECT setval('answers_id_seq', (SELECT max(id) FROM answers));

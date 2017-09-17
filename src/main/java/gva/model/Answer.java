@@ -21,8 +21,9 @@ public class Answer implements Serializable {
     public static final String TIMESTAMP = "ts";
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @SequenceGenerator(name = "answerSeq", sequenceName = "answers_id_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "answerSeq")
+    private Long id;
 
     @NotBlank
     @Column(name = CONTENT, nullable = false)
@@ -77,11 +78,11 @@ public class Answer implements Serializable {
                 '}';
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

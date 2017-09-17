@@ -2,11 +2,13 @@ DROP TABLE IF EXISTS "answers" CASCADE;
 DROP TABLE IF EXISTS "likes" CASCADE;
 DROP TABLE IF EXISTS "questions" CASCADE;
 DROP TABLE IF EXISTS "users" CASCADE;
+
 DROP FUNCTION IF EXISTS on_new_like() CASCADE;
+
 DROP TRIGGER IF EXISTS "new_like" ON "likes" CASCADE;
 
 CREATE TABLE "users" (
-  "id" SERIAL NOT NULL,
+  "id" BIGSERIAL NOT NULL,
   "email" VARCHAR(128) NOT NULL UNIQUE,
   "name" VARCHAR(128) NOT NULL UNIQUE,
   "password_hash" VARCHAR(60) NOT NULL, -- hotfix for hibernate
@@ -18,10 +20,10 @@ CREATE TABLE "users" (
 
 
 CREATE TABLE "questions" (
-  "id" SERIAL NOT NULL,
+  "id" BIGSERIAL NOT NULL,
   "header" TEXT NOT NULL,
   "content" TEXT DEFAULT NULL,
-  "user_id" INTEGER NOT NULL,
+  "user_id" BIGINT NOT NULL,
   "rating" INTEGER NOT NULL DEFAULT '0',
   "ts" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   CONSTRAINT questions_pk PRIMARY KEY ("id")
@@ -31,10 +33,10 @@ CREATE TABLE "questions" (
 
 
 CREATE TABLE "answers" (
-  "id" serial NOT NULL,
+  "id" BIGSERIAL NOT NULL,
   "content" TEXT NOT NULL,
-  "question_id" INTEGER NOT NULL,
-  "user_id" INTEGER NOT NULL,
+  "question_id" BIGINT NOT NULL,
+  "user_id" BIGINT NOT NULL,
   "is_correct" BOOLEAN DEFAULT NULL,
   "ts" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   UNIQUE ("question_id", "is_correct"),
@@ -45,8 +47,8 @@ CREATE TABLE "answers" (
 
 
 CREATE TABLE "likes" (
-  "question_id" INTEGER NOT NULL,
-  "user_id" INTEGER NOT NULL,
+  "question_id" BIGINT NOT NULL,
+  "user_id" BIGINT NOT NULL,
   CONSTRAINT likes_pk PRIMARY KEY ("question_id","user_id")
 ) WITH (
   OIDS=FALSE
@@ -81,3 +83,5 @@ CREATE TRIGGER new_like
   ON likes
   FOR EACH ROW
   EXECUTE PROCEDURE on_new_like();
+
+
