@@ -21,7 +21,7 @@ public class Answer implements Serializable {
     public static final String TIMESTAMP = "ts";
 
     @Id
-    @SequenceGenerator(name = "answerSeq", sequenceName = "answers_id_seq")
+    @SequenceGenerator(name = "answerSeq", sequenceName = "answers_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "answerSeq")
     private Long id;
 

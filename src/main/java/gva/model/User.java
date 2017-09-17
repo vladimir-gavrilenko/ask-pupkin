@@ -22,7 +22,7 @@ public class User implements Serializable {
     public static final String AVATAR_PATH = "avatar_path";
 
     @Id
-    @SequenceGenerator(name = "userSeq", sequenceName = "users_id_seq")
+    @SequenceGenerator(name = "userSeq", sequenceName = "users_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "userSeq")
     private Long id;
 
