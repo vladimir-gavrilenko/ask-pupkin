@@ -13,6 +13,7 @@
             <ul class="nav navbar-nav navbar-right">
                 <li sec:authorize="isAnonymous()"><a href="/login" th:href="@{/login}">Log in</a></li>
                 <li sec:authorize="isAnonymous()"><a href="/signup" th:href="@{/signup}">Sign up</a></li>
+                <li sec:authorize="isAuthenticated()"><a href="/user/1" th:href="@{/user/}" sec:authentication="name">Foo</a></li>
                 <li sec:authorize="isAuthenticated()"><a href="/logout" th:href="@{/logout}">Log out</a></li>
             </ul>
         </div>
