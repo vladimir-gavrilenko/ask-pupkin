@@ -1,6 +1,8 @@
 package gva.service.impl;
 
 import gva.dao.UserDao;
+import gva.exception.EmailExistsException;
+import gva.exception.UsernameExistsException;
 import gva.model.User;
 import gva.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +23,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void create(User user) {
+    public void create(User user) throws UsernameExistsException, EmailExistsException {
+        if (userDao.findByName(user.getName()) != null) {
+            throw new UsernameExistsException("name: " + user.getName());
+        }
+        if (userDao.findByEmail(user.getEmail()) != null) {
+            throw new EmailExistsException("email: " + user.getEmail());
+        }
         userDao.create(user);
     }
 }

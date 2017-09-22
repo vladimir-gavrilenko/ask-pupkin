@@ -1,22 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:fragment="header">
-    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.7/css/bootstrap.min.css"
-          th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"
-          rel="stylesheet" media="screen"/>
-    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.7/js/bootstrap.min.js"
-          th:href="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"
-          rel="stylesheet" media="screen"/>
-    <link href="../../resources/css/style.css"
-          th:href="@{/resources/css/style.css}" rel="stylesheet"/>
-    <script src="http://cdn.jsdelivr.net/webjars/jquery/3.2.1/jquery.min.js"
-            th:src="@{/webjars/jquery/3.2.1/jquery.min.js}"></script>
-</head>
+<head th:replace="fragments/header :: header"></head>
 <body>
 
 <div class="container" style="margin-top:30px">
     <div class="col-md-12">
         <div class="modal-dialog" style="margin-bottom:0">
+            <div th:errors="${userDto}"></div>
             <div class="modal-content">
                 <div class="panel-heading">
                     <h3 class="panel-title">
@@ -27,22 +17,25 @@
                     </h3>
                 </div>
                 <div class="panel-body">
-                    <form id="form" role="form" action="/signup" th:object="${user}" method="post">
+                    <form id="form" role="form" action="/signup" th:object="${userDto}" method="post">
                         <fieldset>
                             <div class="form-group">
                                 <label for="username">Username*</label>
-                                <input class="form-control" placeholder="john" name="username" type="text" id="username"
+                                <input class="form-control" th:errorclass="has-error"
+                                       placeholder="john" name="username" type="text" id="username"
                                        autofocus required th:field="*{name}">
                             </div>
                             <div class="form-group">
                                 <label for="email">E-mail*</label>
-                                <input class="form-control" placeholder="john.doe@example.com" name="email" type="email"
+                                <input class="form-control" th:errorclass="has-error"
+                                       placeholder="john.doe@example.com" name="email" type="email"
                                        id="email" required th:field="*{email}">
                             </div>
                             <div class="form-group">
                                 <label for="password">Password*</label>
-                                <input class="form-control" name="password" type="password" id="password" value=""
-                                       required th:field="*{passwordHash}">
+                                <input class="form-control" name="password" type="password"
+                                       id="password" value=""
+                                       required th:field="*{password}">
                             </div>
                             <div class="form-group">
                                 <label for="confirm-password">Confirm password*</label>
@@ -58,6 +51,17 @@
                     </form>
                 </div>
             </div>
+            <div th:if="${#fields.hasErrors('${userDto.*}')}">
+                <div class="alert alert-danger text-center" role="alert">
+                    <p><strong>Oh snap!</strong> Registration failed</p>
+                    <p th:if="${#fields.hasErrors('${userDto.email}')}">
+                        User with this email already exists
+                    </p>
+                    <p th:if="${#fields.hasErrors('${userDto.name}')}">
+                        User with this name already exists
+                    </p>
+                </div>
+            </div>
         </div>
     </div>
     <hr>
@@ -66,8 +70,10 @@
 </body>
 <script>
     $('#form').submit(function () {
-        if ($('#password').val() !== $('#confirm-password').val()) {
-            $('#confirm-password').setCustomValidity('Passwords should be same');
+        var passwordField = $('#password');
+        var confirmPasswordField = $('#confirm-password');
+        if (passwordField.val() !== confirmPasswordField.val()) {
+            confirmPasswordField.setCustomValidity('Password does not match the confirm password.');
             return false;
         }
         return true;

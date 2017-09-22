@@ -1,6 +1,9 @@
 package gva.controller;
 
+import gva.exception.EmailExistsException;
+import gva.exception.UsernameExistsException;
 import gva.model.User;
+import gva.model.dto.UserDto;
 import gva.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -11,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -39,19 +43,42 @@ public class UserController {
 
     @GetMapping("/signup")
     public String signUp(Model model) {
-        User user = new User();
-        model.addAttribute("user", user);
+        UserDto userDto = new UserDto();
+        model.addAttribute("userDto", userDto);
         return "signup";
     }
 
     @PostMapping("/signup")
-    public String signUp(@ModelAttribute("user") @Valid User user, HttpServletRequest request, Errors errors) {
-        // there's a plain text password in the passwordHash field in the user object form from frontend
-        String plainTextPassword = user.getPasswordHash();
-        user.setPasswordHash(encoder.encode(plainTextPassword));
-        userService.create(user);
-        authenticateUserAndSetSession(user.getName(), plainTextPassword, request);
+    public String signUp(@ModelAttribute("userDto") @Valid UserDto userDto, HttpServletRequest request,
+                         BindingResult result, Errors errors) {
+        User registeredUser = null;
+        if (!result.hasErrors()) {
+            registeredUser = createUserAccount(userDto, result);
+        }
+        if (registeredUser == null) {
+            return "signup";
+        }
+        authenticateUserAndSetSession(userDto.getName(), userDto.getPassword(), request);
         return "redirect:/";
+    }
+
+    private User createUserAccount(UserDto userDto, BindingResult result) {
+        User user = new User();
+        user.setName(userDto.getName());
+        user.setEmail(userDto.getEmail());
+        user.setPasswordHash(encoder.encode(userDto.getPassword()));
+        try {
+            userService.create(user);
+        } catch (UsernameExistsException e) {
+            System.err.println(e.getMessage());
+            result.rejectValue("name", "nameError");
+            return null;
+        } catch (EmailExistsException e) {
+            System.err.println(e.getMessage());
+            result.rejectValue("email", "emailError");
+            return null;
+        }
+        return user;
     }
 
     private void authenticateUserAndSetSession(String username, String password, HttpServletRequest request) {

@@ -1,8 +1,5 @@
 package gva.model;
 
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotBlank;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -26,15 +23,12 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "userSeq")
     private Long id;
 
-    @NotBlank
     @Column(name = EMAIL, nullable = false, unique = true)
     private String email;
 
-    @NotBlank
     @Column(name = NAME, nullable = false, unique = true)
     private String name;
 
-    @Length(max = 60)
     @Column(name = PASSWORD_HASH, nullable = false)
     private String passwordHash;
 

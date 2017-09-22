@@ -15,9 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 @ContextConfiguration(classes = {RootConfig.class})
 @RunWith(value = SpringJUnit4ClassRunner.class)
@@ -103,5 +101,27 @@ public class ReadDaoTest extends DaoTest {
         assertTrue(questions.size() < 5);
         questions = questionDao.findTop(0);
         assertTrue(questions.isEmpty());
+    }
+
+    @Test
+    public void testFindingNonExistingRecords() throws Exception {
+        User user = userDao.findByName("-1");
+        assertNull(user);
+        user = userDao.findByEmail("-1");
+        assertNull(user);
+        user = userDao.findById(-1L);
+        assertNull(user);
+
+        Question question = questionDao.findById(-1L);
+        assertNull(question);
+        user = new User("test", "test", "test");
+        List<Question> questions = questionDao.findAskedBy(user);
+        assertTrue(questions.isEmpty());
+
+        Answer answer = answerDao.findById(-1L);
+        assertNull(answer);
+        question = new Question("test", "test", user);
+        List<Answer> answers = answerDao.findFor(question);
+        assertTrue(answers.isEmpty());
     }
 }

@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.NoResultException;
+
 @Repository
 @Transactional
 public class HibernateUserDao extends HibernateDao<User> implements UserDao {
@@ -21,21 +23,23 @@ public class HibernateUserDao extends HibernateDao<User> implements UserDao {
 
     @Override
     public User findByName(String name) throws DaoException {
-        return getBy(User.NAME, name);
+        return findBy(User.NAME, name);
     }
 
     @Override
     public User findByEmail(String email) throws DaoException {
-        return getBy(User.EMAIL, email);
+        return findBy(User.EMAIL, email);
     }
 
-    private User getBy(String field, String value) throws DaoException {
+    private User findBy(String field, String value) throws DaoException {
         try {
             Query<User> query = getSession().createQuery(
                     "from User where " + field + " = :value", User.class
             );
             query.setParameter("value", value);
             return query.getSingleResult();
+        } catch (NoResultException exception) {
+            return null;
         } catch (HibernateException exception) {
             throw new DaoException(exception);
         }
