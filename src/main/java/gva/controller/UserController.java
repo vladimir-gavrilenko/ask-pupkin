@@ -91,4 +91,9 @@ public class UserController {
         Authentication authenticatedUser = authenticationManager.authenticate(token);
         SecurityContextHolder.getContext().setAuthentication(authenticatedUser);
     }
+
+    @GetMapping("/settings")
+    public String settings() {
+        return "settings";
+    }
 }
