@@ -13,7 +13,22 @@ apply plugin: 'idea'
 apply plugin: 'war'
 apply plugin: 'org.akhikhl.gretty'
 
+// https://intellij-support.jetbrains.com/hc/en-us/community/posts/115000186970-How-to-Debug-webb-app-started-with-gradle-gretty
+// Enable debugging of gretty started webapp in IDEA
+// For debuging a gradle task, IDEA creates a gradle init script (in /tmp/ijinit#.gradle), that sets JVM arguments
+// to enable remote debugging.
+// Unfortunately by default that only works for gradle tasks that implement JavaForkOptions - which gretty doesn't do.
+// So parse the JVM args that IDEA uses from that init script and set them as JVM args to be used by gretty:
+def debugArgs = []
+if (gradle.startParameter.initScripts) {
+    def line = file(gradle.startParameter.initScripts[0]).readLines().findAll({x -> x ==~ /.*-agentlib:jdwp=.*/ })[0]
+    if (line) {
+        debugArgs = ((line =~ /.*'(.*)'.*/)[0][1] as String).split(' ')
+    }
+}
+
 gretty {
+    jvmArgs = [*debugArgs]
     httpPort = 8080
     contextPath = '/'
     servletContainer = 'jetty9'
