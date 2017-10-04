@@ -79,3 +79,7 @@ code.block {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+.settings-update-message {
+    margin-bottom: 0;
+}

@@ -53,10 +53,28 @@
                 -->
                 <div class="form-group">
                     <label class="col-md-3 control-label"></label>
+                    <div class="col-lg-8">
+                        <div th:if="${success}"
+                             class="alert alert-info alert-dismissable text-center settings-update-message"
+                             role="alert">
+                            Profile is successfully updated!
+                        </div>
+                        <div th:if="${#fields.hasErrors('name')}"
+                             class="alert alert-danger alert-dismissable text-center settings-update-message"
+                             role="alert">
+                            Failed to update profile. User with this name already exists.
+                        </div>
+                        <div th:if="${#fields.hasErrors('email')}"
+                             class="alert alert-danger alert-dismissable text-center settings-update-message"
+                             role="alert">
+                            Failed to update profile. User with this email already exists.
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label"></label>
                     <div class="col-md-8">
                         <input type="submit" class="btn btn-primary" value="Save Changes">
-                        <span></span>
-                        <input type="reset" class="btn btn-default" value="Cancel">
                     </div>
                 </div>
             </form>
