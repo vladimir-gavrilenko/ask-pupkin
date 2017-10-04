@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
 public class UserController {
@@ -53,7 +54,7 @@ public class UserController {
                          BindingResult result, Errors errors) {
         User registeredUser = null;
         if (!result.hasErrors()) {
-            registeredUser = createUserAccount(userDto, result);
+            registeredUser = createUserAccount(userDto, result); // TODO refactor, binding result
         }
         if (registeredUser == null) {
             return "signup";
@@ -62,7 +63,7 @@ public class UserController {
         return "redirect:/";
     }
 
-    private User createUserAccount(UserDto userDto, BindingResult result) {
+    private User createUserAccount(UserDto userDto, BindingResult result) { // TODO duplicate code
         User user = new User();
         user.setName(userDto.getName());
         user.setEmail(userDto.getEmail());
@@ -81,7 +82,7 @@ public class UserController {
         return user;
     }
 
-    private void authenticateUserAndSetSession(String username, String password, HttpServletRequest request) {
+    private void authenticateUserAndSetSession(Object username, Object password, HttpServletRequest request) {
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
 
         // generate session if one doesn't exist
@@ -93,7 +94,48 @@ public class UserController {
     }
 
     @GetMapping("/settings")
-    public String settings() {
+    public String settings(Model model, Principal principal) {
+        String name = principal.getName();
+        User user = userService.findByName(name);
+        UserDto userDto = new UserDto(user);
+        System.out.println(userDto);
+        model.addAttribute("userDto", userDto);
         return "settings";
+    }
+
+    @PostMapping("/settings")
+    public String update(Model model, @ModelAttribute("userDto") @Valid UserDto userDto,
+                         BindingResult result, HttpServletRequest request) {
+        User user = null;
+        if (!result.hasErrors()) {
+            user = updateUserAccount(userDto, result); // TODO refactor, binding result
+        }
+        if (user != null) {
+            model.addAttribute("success", true);
+            changeUsernameInSecurityContext(userDto.getName(), request);
+        }
+        return "settings";
+    }
+
+    private User updateUserAccount(UserDto userDto, BindingResult result) { // TODO duplicate code
+        User user = userService.findById(userDto.getId());
+        user.setName(userDto.getName());
+        user.setEmail(userDto.getEmail());
+        try {
+            userService.update(user);
+        } catch (UsernameExistsException e) {
+            System.err.println(e.getMessage());
+            result.rejectValue("name", "nameError");
+            return null;
+        } catch (EmailExistsException e) {
+            System.err.println(e.getMessage());
+            result.rejectValue("email", "emailError");
+            return null;
+        }
+        return user;
+    }
+
+    private void changeUsernameInSecurityContext(String username, HttpServletRequest request) {
+        // stub
     }
 }
