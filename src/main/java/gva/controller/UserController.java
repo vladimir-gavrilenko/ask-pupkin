@@ -50,12 +50,9 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public String signUp(@ModelAttribute("userDto") @Valid UserDto userDto, HttpServletRequest request,
-                         BindingResult result, Errors errors) {
-        User registeredUser = null;
-        if (!result.hasErrors()) {
-            registeredUser = createUserAccount(userDto, result); // TODO refactor, binding result
-        }
+    public String signUp(@ModelAttribute("userDto") UserDto userDto,
+                         HttpServletRequest request, BindingResult result) {
+        User registeredUser = createUserAccount(userDto, result); // TODO refactor, binding result
         if (registeredUser == null) {
             return "signup";
         }
@@ -104,13 +101,10 @@ public class UserController {
     }
 
     @PostMapping("/settings")
-    public String update(Model model, @ModelAttribute("userDto") @Valid UserDto userDto,
-                         BindingResult result, HttpServletRequest request) {
-        User user = null;
-        if (!result.hasErrors()) {
-            user = updateUserAccount(userDto, result); // TODO refactor, binding result
-        }
-        if (user != null) {
+    public String update(Model model, @ModelAttribute("userDto") UserDto userDto,
+                         HttpServletRequest request, BindingResult result) {
+        User updatedUser = updateUserAccount(userDto, result); // TODO refactor, binding result, return value
+        if (updatedUser != null) {
             model.addAttribute("success", true);
             changeUsernameInSecurityContext(userDto.getName(), request);
         }

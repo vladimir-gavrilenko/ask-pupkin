@@ -1,7 +1,6 @@
 package gva.model.dto;
 
 import gva.model.User;
-import org.hibernate.validator.constraints.NotBlank;
 
 import java.io.Serializable;
 
@@ -9,14 +8,8 @@ public class UserDto implements Serializable {
     private static final long serialVersionUID = 8689486590613531863L;
 
     private Long id;
-
-    @NotBlank
     private String name;
-
-    @NotBlank
     private String email;
-
-    @NotBlank
     private String password;
 
     public UserDto() {
