@@ -18,6 +18,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User findById(Long id) {
+        return userDao.findById(id);
+    }
+
+    @Override
     public User findByName(String username) {
         return userDao.findByName(username);
     }
@@ -25,11 +30,23 @@ public class UserServiceImpl implements UserService {
     @Override
     public void create(User user) throws UsernameExistsException, EmailExistsException {
         if (userDao.findByName(user.getName()) != null) {
-            throw new UsernameExistsException("name: " + user.getName());
+            throw new UsernameExistsException("failed to create user with name: " + user.getName());
         }
         if (userDao.findByEmail(user.getEmail()) != null) {
-            throw new EmailExistsException("email: " + user.getEmail());
+            throw new EmailExistsException("failed to create user with email: " + user.getEmail());
         }
         userDao.create(user);
+    }
+
+    @Override
+    public void update(User user) throws UsernameExistsException, EmailExistsException {
+        User oldUser = userDao.findById(user.getId());
+        if (!oldUser.getName().equals(user.getName()) && userDao.findByName(user.getName()) != null) {
+            throw new UsernameExistsException("failed to update user with new name: " + user.getName());
+        }
+        if (!oldUser.getEmail().equals(user.getEmail()) && userDao.findByEmail(user.getEmail()) != null) {
+            throw new EmailExistsException("failed to update user with new email: " + user.getEmail());
+        }
+        userDao.update(user);
     }
 }
