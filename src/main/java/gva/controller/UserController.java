@@ -4,7 +4,7 @@ import gva.exception.EmailExistsException;
 import gva.exception.UsernameExistsException;
 import gva.model.User;
 import gva.model.UserDetailsImpl;
-import gva.model.dto.UserDto;
+import gva.dto.UserDto;
 import gva.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;

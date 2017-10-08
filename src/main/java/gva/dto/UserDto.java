@@ -1,4 +1,4 @@
-package gva.model.dto;
+package gva.dto;
 
 import gva.model.User;
 
