@@ -14,7 +14,7 @@
                 <img src="//placehold.it/128" class="avatar-large" alt="avatar">
                 <h6>Change avatar</h6>
                 <form th:action="@{'/avatar/' + ${userDto.getName()}}" method="post" enctype="multipart/form-data">
-                    <input type="file" name="file" class="form-control">
+                    <input type="file" name="file" accept="image/*" class="form-control">
                     <input type="submit" class="btn btn-primary">
                 </form>
             </div>
