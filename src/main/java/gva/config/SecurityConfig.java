@@ -3,6 +3,7 @@ package gva.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -33,6 +34,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeRequests()
                 .antMatchers("/settings").hasAnyAuthority("USER")
+                .antMatchers(HttpMethod.POST, "/avatars/*").hasAnyAuthority("USER")
+                .antMatchers(HttpMethod.GET, "/avatars/*").permitAll()
                 .antMatchers("/resources/**", "/webjars/**", "/*", "/question/*").permitAll()
                 .anyRequest().authenticated()
                 .and()
