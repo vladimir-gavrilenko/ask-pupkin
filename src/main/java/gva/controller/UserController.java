@@ -27,13 +27,11 @@ import java.security.Principal;
 public class UserController {
     private final UserService userService;
     private final AuthenticationManager authenticationManager;
-    private final PasswordEncoder encoder;
 
     @Autowired
-    public UserController(UserService userService, AuthenticationManager authenticationManager, PasswordEncoder encoder) {
+    public UserController(UserService userService, AuthenticationManager authenticationManager) {
         this.userService = userService;
         this.authenticationManager = authenticationManager;
-        this.encoder = encoder;
     }
 
     @GetMapping("/login")
@@ -63,7 +61,7 @@ public class UserController {
         User user = new User();
         user.setName(userDto.getName());
         user.setEmail(userDto.getEmail());
-        user.setPasswordHash(encoder.encode(userDto.getPassword()));
+        user.setPasswordHash(userService.encodePassword(userDto.getPassword()));
         try {
             userService.create(user);
         } catch (UsernameExistsException e) {

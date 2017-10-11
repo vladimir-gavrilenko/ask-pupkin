@@ -1,5 +1,6 @@
 package gva.service.impl;
 
+import gva.dao.UserDao;
 import gva.model.User;
 import gva.model.UserDetailsImpl;
 import gva.service.UserService;
@@ -11,16 +12,16 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
-    private final UserService userService;
+    private final UserDao userDao;
 
     @Autowired
-    public UserDetailsServiceImpl(UserService userService) {
-        this.userService = userService;
+    public UserDetailsServiceImpl(UserDao userDao) {
+        this.userDao = userDao;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userService.findByName(username);
+        User user = userDao.findByName(username);
         if (user == null) {
             throw new UsernameNotFoundException("Can't find user with name '" + username + "'");
         }
