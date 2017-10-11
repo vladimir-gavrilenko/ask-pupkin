@@ -10,7 +10,9 @@
         <div class="col-md-3">
             <div class="col-md-9 text-center">
                 <img class="avatar-large" src="../../resources/img/default.jpg"
-                     th:src="'/avatars/' + ${question.getAuthor().getAvatarPath()}">
+                     th:src="${question.getAuthor().getAvatarPath() == null}
+                                            ? '/resources/img/default.jpg'
+                                            : '/avatars/' + ${question.getAuthor().getAvatarPath()}">
                 <div th:text="${question.getAuthor().getName()}">
                     Author
                 </div>
@@ -37,8 +39,11 @@
         <div class="panel panel-default">
             <div class="panel-body">
                 <div class="col-md-2 text-center">
-                    <img class="avatar-small" th:title="${answer.getAuthor().getName()}" src="../../resources/img/default.jpg"
-                         th:src="'/avatars/' + ${answer.getAuthor().getAvatarPath()}">
+                    <img class="avatar-small" th:title="${answer.getAuthor().getName()}"
+                         src="../../resources/img/default.jpg"
+                         th:src="${answer.getAuthor().getAvatarPath() == null}
+                                            ? '/resources/img/default.jpg'
+                                            : '/avatars/' + ${answer.getAuthor().getAvatarPath()}">
                     <div>
                         <label>correct!
                             <input type="checkbox" readonly onclick="return false;"

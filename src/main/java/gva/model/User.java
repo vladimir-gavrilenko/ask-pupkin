@@ -33,7 +33,7 @@ public class User implements Serializable {
     private String passwordHash;
 
     @Column(name = AVATAR_PATH, nullable = false)
-    private String avatarPath = "default.jpg";
+    private String avatarPath;
 
     @ManyToMany
     @JoinTable(name = "likes",

@@ -16,8 +16,11 @@
                     </div>
                 </div>
                 <div class="col-md-9">
-                    <img class="avatar-small" th:title="${question.getAuthor().getName()}" src="../../resources/img/default.jpg"
-                         th:src="'/avatars/' + ${question.getAuthor().getAvatarPath()}">
+                    <img class="avatar-small" th:title="${question.getAuthor().getName()}"
+                         src="../../resources/img/default.jpg"
+                         th:src="${question.getAuthor().getAvatarPath() == null}
+                                            ? '/resources/img/default.jpg'
+                                            : '/avatars/' + ${question.getAuthor().getAvatarPath()}">
                 </div>
             </div>
             <div class="col-md-10">

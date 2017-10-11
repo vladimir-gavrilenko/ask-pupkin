@@ -11,6 +11,7 @@ public class UserDto implements Serializable {
     private String name;
     private String email;
     private String password;
+    private String avatarPath;
 
     public UserDto() {
     }
@@ -19,6 +20,7 @@ public class UserDto implements Serializable {
         this.id = user.getId();
         this.name = user.getName();
         this.email = user.getEmail();
+        this.avatarPath = user.getAvatarPath();
     }
 
     public Long getId() {
@@ -51,6 +53,14 @@ public class UserDto implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getAvatarPath() {
+        return avatarPath;
+    }
+
+    public void setAvatarPath(String avatarPath) {
+        this.avatarPath = avatarPath;
     }
 }
 
