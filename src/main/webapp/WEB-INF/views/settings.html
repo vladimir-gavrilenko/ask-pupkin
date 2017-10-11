@@ -2,10 +2,15 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="fragments/header :: header"></head>
 
-<script th:src="@{/resources/js/libs/jquery.ui.widget.js}" src="../../resources/js/libs/jquery.ui.widget.js"></script>
-<script th:src="@{/resources/js/libs/jquery.iframe-transport.js}"
-        src="../../resources/js/libs/jquery.iframe-transport.js"></script>
-<script th:src="@{/resources/js/libs/jquery.fileupload.js}" src="../../resources/js/libs/jquery.fileupload.js"></script>
+<script th:src="@{/resources/js/libs/jquery.ui.widget.min.js}"
+        src="../../resources/js/libs/jquery.ui.widget.min.js">
+</script>
+<script th:src="@{/webjars/jquery-file-upload/9.10.1/js/jquery.iframe-transport.js}"
+        src="//bowercdn.net/c/jquery-file-upload-9.10.1/js/jquery.iframe-transport.js">
+</script>
+<script th:src="@{/webjars/jquery-file-upload/9.10.1/js/jquery.fileupload.js}"
+        src="//bowercdn.net/c/jquery-file-upload-9.10.1/js/jquery.fileupload.js">
+</script>
 <script th:src="@{/resources/js/upload-avatar.js}" src="../../resources/js/upload-avatar.js"></script>
 <script th:inline="javascript">
     window.avatarUploadUrl = /*[[@{'/avatar/' + ${userDto.getName()}}]]*/ '';
@@ -21,7 +26,7 @@
         <!-- left column with avatar -->
         <div class="col-md-3">
             <div class="text-center">
-                <img src="//placehold.it/180" id="avatar-img" class="avatar-large" alt="avatar">
+                <img src="//placehold.it/180" id="avatar-img" class="avatar-large" alt="avatar-small">
                 <div>
                     <span role="button" class="btn btn-default avatar-file-input-button" id="upload-avatar-button">
                         <span>Change avatar</span>
