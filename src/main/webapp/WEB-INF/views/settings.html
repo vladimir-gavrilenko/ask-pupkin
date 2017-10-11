@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="fragments/header :: header"></head>
+
+<script th:src="@{/resources/js/libs/jquery.ui.widget.js}" src="../../resources/js/libs/jquery.ui.widget.js"></script>
+<script th:src="@{/resources/js/libs/jquery.iframe-transport.js}"
+        src="../../resources/js/libs/jquery.iframe-transport.js"></script>
+<script th:src="@{/resources/js/libs/jquery.fileupload.js}" src="../../resources/js/libs/jquery.fileupload.js"></script>
+<script th:src="@{/resources/js/upload-avatar.js}" src="../../resources/js/upload-avatar.js"></script>
+<script th:inline="javascript">
+    window.avatarUploadUrl = /*[[@{'/avatar/' + ${userDto.getName()}}]]*/ '';
+</script>
+
 <body>
 <div th:replace="fragments/navbar :: navbar"></div>
 <div class="container">
@@ -11,12 +21,30 @@
         <!-- left column with avatar -->
         <div class="col-md-3">
             <div class="text-center">
-                <img src="//placehold.it/128" class="avatar-large" alt="avatar">
-                <h6>Change avatar</h6>
-                <form th:action="@{'/avatar/' + ${userDto.getName()}}" method="post" enctype="multipart/form-data">
-                    <input type="file" name="file" accept="image/*" class="form-control">
-                    <input type="submit" class="btn btn-primary">
-                </form>
+                <img src="//placehold.it/180" id="avatar-img" class="avatar-large" alt="avatar">
+                <div>
+                    <span role="button" class="btn btn-default avatar-file-input-button" id="upload-avatar-button">
+                        <span>Change avatar</span>
+                        <input type="file" accept="image/jpeg, image/png" id="avatar-file-upload-input" name="file"/>
+                    </span>
+                </div>
+                <div id="avatar-upload-progress" style="display: none"
+                     class="progress avatar-upload-progress-bar center-block">
+                    <div class="progress-bar progress-bar-info"></div>
+                </div>
+
+                <div>
+                    <div id="upload-avatar-success" style="display: none"
+                         class="alert alert-info alert-dismissable text-center settings-update-message"
+                         role="alert">
+                        Avatar is successfully changed!
+                    </div>
+                    <div id="upload-avatar-error" style="display: none"
+                         class="alert alert-danger alert-dismissable text-center settings-update-message"
+                         role="alert">
+                        Failed to change avatar.
+                    </div>
+                </div>
             </div>
         </div>
 

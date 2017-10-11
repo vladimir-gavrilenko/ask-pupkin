@@ -28,10 +28,14 @@ public class AvatarController {
         String fileName = username + "." + extension;
         try {
             avatarService.store(fileName, file.getBytes());
-            return "ok";
+            return uploadingResult("ok", "/avatars/" + fileName);
         } catch (IOException e) {
             System.err.println(e.getMessage());
-            return "error";
+            return uploadingResult("error", null);
         }
+    }
+
+    private String uploadingResult(String status, String url) {
+        return "{\"status\":\"" + status + "\", \"url\": \"" + url + "\"}";
     }
 }

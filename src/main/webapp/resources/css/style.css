@@ -91,3 +91,35 @@ code.block {
 .settings-update-message {
     margin-bottom: 0;
 }
+
+.avatar-file-input-button {
+    width: 180px;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.avatar-file-input-button input {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    opacity: 0;
+    -ms-filter: 'alpha(opacity=0)';
+    font-size: 200px;
+    direction: ltr;
+    cursor: pointer;
+}
+
+.avatar-upload-progress-bar {
+    width: 180px;
+}
+
+/* Fixes for IE < 8 */
+@media screen\9 {
+    .fileinput-button input {
+        filter: alpha(opacity=0);
+        font-size: 100%;
+        height: 100%;
+    }
+}
