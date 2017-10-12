@@ -6,15 +6,18 @@ import gva.exception.UsernameExistsException;
 import gva.model.User;
 import gva.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements UserService {
     private final UserDao userDao;
+    private final PasswordEncoder encoder;
 
     @Autowired
-    public UserServiceImpl(UserDao userDao) {
+    public UserServiceImpl(UserDao userDao, PasswordEncoder encoder) {
         this.userDao = userDao;
+        this.encoder = encoder;
     }
 
     @Override
@@ -48,5 +51,20 @@ public class UserServiceImpl implements UserService {
             throw new EmailExistsException("failed to update user with new email: " + user.getEmail());
         }
         userDao.update(user);
+    }
+
+    @Override
+    public String encodePassword(String password) {
+        return encoder.encode(password);
+    }
+
+    @Override
+    public void updateAvatarPath(User user, String fileName) {
+        if (user == null) return;
+        String oldAvatarPath = user.getAvatarPath();
+        if (oldAvatarPath == null || !oldAvatarPath.equals(fileName)) {
+            user.setAvatarPath(fileName);
+            userDao.update(user);
+        }
     }
 }

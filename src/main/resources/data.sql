@@ -1,7 +1,7 @@
 -- USERS
-INSERT INTO users(id, email, name, avatar_path, password_hash) VALUES (1, 'foo@foo.com', 'foo', 'foo.png', '$2a$04$hMUeqxP71wfuyW8jLBq8NeaKRcB42eRY/WC0DzLup4jUp.AT/4ami');
-INSERT INTO users(id, email, name, avatar_path, password_hash) VALUES (2, 'bar@bar.com', 'bar', 'bar.png', '$2a$04$UPOMdrZUMKK6lLOjwJZ5duhvpnfcNtbm9ouHYF2ZpcON4TOFE4nsO');
-INSERT INTO users(id, email, name, avatar_path, password_hash) VALUES (3, 'baz@baz.com', 'baz', 'baz.png', '$2a$04$y95ct.TTvfN3zSUZx7gxEOy./N32qO.wglE7X0EgzKyFy95C2nWB.');
+INSERT INTO users(id, email, name, avatar_path, password_hash) VALUES (1, 'foo@foo.com', 'foo', '1.png', '$2a$04$hMUeqxP71wfuyW8jLBq8NeaKRcB42eRY/WC0DzLup4jUp.AT/4ami');
+INSERT INTO users(id, email, name, avatar_path, password_hash) VALUES (2, 'bar@bar.com', 'bar', '2.png', '$2a$04$UPOMdrZUMKK6lLOjwJZ5duhvpnfcNtbm9ouHYF2ZpcON4TOFE4nsO');
+INSERT INTO users(id, email, name, avatar_path, password_hash) VALUES (3, 'baz@baz.com', 'baz', '3.png', '$2a$04$y95ct.TTvfN3zSUZx7gxEOy./N32qO.wglE7X0EgzKyFy95C2nWB.');
 
 -- QUESTIONS
 INSERT INTO questions(id, header, content, user_id)
