@@ -73,7 +73,8 @@ public class UserController {
 
     @PostMapping("/settings")
     public String update(Model model, @ModelAttribute("userDto") UserDto userDto, BindingResult result) {
-        updateUserAccount(userDto, result);
+        User user = updateUserAccount(userDto, result);
+        userDto.reload(user); // update displayed model (including avatar path)
         if (!result.hasErrors()) {
             model.addAttribute("success", true);
             changeUsernameInSecurityContext(userDto.getName());
@@ -126,7 +127,7 @@ public class UserController {
         SecurityContextHolder.getContext().setAuthentication(authenticatedUser);
     }
 
-    private void updateUserAccount(UserDto userDto, BindingResult result) { // TODO see createUserAccount
+    private User updateUserAccount(UserDto userDto, BindingResult result) { // TODO see createUserAccount
         User user = userService.findById(userDto.getId());
         user.setName(userDto.getName());
         user.setEmail(userDto.getEmail());
@@ -139,6 +140,7 @@ public class UserController {
             System.err.println(e.getMessage());
             result.rejectValue("email", "emailError");
         }
+        return user;
     }
 
     private void changeUsernameInSecurityContext(String newName) {
