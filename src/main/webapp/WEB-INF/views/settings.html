@@ -13,7 +13,7 @@
 </script>
 <script th:src="@{/resources/js/upload-avatar.js}" src="../../resources/js/upload-avatar.js"></script>
 <script th:inline="javascript">
-    window.avatarUploadUrl = /*[[@{'/avatar/' + ${userDto.getName()}}]]*/ '';
+    window.avatarUploadUrl = /*[[@{'/avatar/' + ${userDto.getId()}}]]*/ '';
 </script>
 
 <body>

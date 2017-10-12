@@ -14,4 +14,6 @@ public interface UserService {
     void update(User user) throws UsernameExistsException, EmailExistsException;
 
     String encodePassword(String password);
+
+    void updateAvatarPath(User user, String fileName);
 }

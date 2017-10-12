@@ -57,4 +57,14 @@ public class UserServiceImpl implements UserService {
     public String encodePassword(String password) {
         return encoder.encode(password);
     }
+
+    @Override
+    public void updateAvatarPath(User user, String fileName) {
+        if (user == null) return;
+        String oldAvatarPath = user.getAvatarPath();
+        if (oldAvatarPath == null || !oldAvatarPath.equals(fileName)) {
+            user.setAvatarPath(fileName);
+            userDao.update(user);
+        }
+    }
 }

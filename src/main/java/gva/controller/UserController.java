@@ -5,32 +5,36 @@ import gva.exception.UsernameExistsException;
 import gva.model.User;
 import gva.model.UserDetailsImpl;
 import gva.dto.UserDto;
+import gva.service.AvatarService;
 import gva.service.UserService;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.security.Principal;
 
 @Controller
 public class UserController {
     private final UserService userService;
+    private final AvatarService avatarService;
     private final AuthenticationManager authenticationManager;
 
     @Autowired
-    public UserController(UserService userService, AuthenticationManager authenticationManager) {
+    public UserController(UserService userService, AvatarService avatarService,
+                          AuthenticationManager authenticationManager) {
         this.userService = userService;
+        this.avatarService = avatarService;
         this.authenticationManager = authenticationManager;
     }
 
@@ -57,6 +61,47 @@ public class UserController {
         return "redirect:/";
     }
 
+    @GetMapping("/settings")
+    public String settings(Model model, Principal principal) {
+        String name = principal.getName();
+        User user = userService.findByName(name);
+        UserDto userDto = new UserDto(user);
+        System.out.println(userDto);
+        model.addAttribute("userDto", userDto);
+        return "settings";
+    }
+
+    @PostMapping("/settings")
+    public String update(Model model, @ModelAttribute("userDto") UserDto userDto, BindingResult result) {
+        updateUserAccount(userDto, result);
+        if (!result.hasErrors()) {
+            model.addAttribute("success", true);
+            changeUsernameInSecurityContext(userDto.getName());
+        }
+        return "settings";
+    }
+
+    @PostMapping("/avatar/{userId}")
+    @ResponseBody
+    public String handleAvatarUpload(@PathVariable Long userId, MultipartFile file) {
+        String extension = FilenameUtils.getExtension(file.getOriginalFilename());
+        String fileName = userId + "." + extension;
+        try {
+            avatarService.store(fileName, file.getBytes());
+            User user = userService.findById(userId);
+            userService.updateAvatarPath(user, fileName);
+            return avatarUploadingResult("ok", "/avatars/" + fileName);
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+            return avatarUploadingResult("error", null);
+        }
+    }
+
+    private String avatarUploadingResult(String status, String url) {
+        return "{\"status\":\"" + status + "\", \"url\": \"" + url + "\"}";
+    }
+
+
     private void createUserAccount(UserDto userDto, BindingResult result) { // TODO see updateUserAccount
         User user = new User();
         user.setName(userDto.getName());
@@ -79,26 +124,6 @@ public class UserController {
         token.setDetails(new WebAuthenticationDetails(request));
         Authentication authenticatedUser = authenticationManager.authenticate(token);
         SecurityContextHolder.getContext().setAuthentication(authenticatedUser);
-    }
-
-    @GetMapping("/settings")
-    public String settings(Model model, Principal principal) {
-        String name = principal.getName();
-        User user = userService.findByName(name);
-        UserDto userDto = new UserDto(user);
-        System.out.println(userDto);
-        model.addAttribute("userDto", userDto);
-        return "settings";
-    }
-
-    @PostMapping("/settings")
-    public String update(Model model, @ModelAttribute("userDto") UserDto userDto, BindingResult result) {
-        updateUserAccount(userDto, result);
-        if (!result.hasErrors()) {
-            model.addAttribute("success", true);
-            changeUsernameInSecurityContext(userDto.getName());
-        }
-        return "settings";
     }
 
     private void updateUserAccount(UserDto userDto, BindingResult result) { // TODO see createUserAccount
